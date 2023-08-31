@@ -35,7 +35,6 @@ export const createCategory_supplies = async (req, res) => {
             Imagen
         })
 
-        console.log(newCategory_supplies)
         await newCategory_supplies.save();
         res.json(newCategory_supplies);
     } catch (error) {

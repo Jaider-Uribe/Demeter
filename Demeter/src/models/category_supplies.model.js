@@ -30,3 +30,4 @@ supplies.belongsTo (category_supplies, {
     foreignKey: 'CATEGORIA_INSUMO_ID',
     target: 'ID_CATEGORIA_INSUMO'
 });
+

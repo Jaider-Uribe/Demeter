@@ -11,7 +11,7 @@ function ListCategorySupplies() {
 
     if (Category_supplies.length < 0) return (<h1>no hay categorias</h1>)
 
-    return (    
+    return (
         <div className='grid  grid-cols-3 gap-2'>
             {
                 Category_supplies.map(category_supplies => (

@@ -1,18 +1,18 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCategorySupplies } from '../context/category_supplies.context.jsx';
+import { useCategoryProducts } from '../context/category_products.context.jsx';
 import { useEffect } from 'react';
 
-function CreateCategorySupplies() {
+function CreateCategoryProducts() {
   const { register, handleSubmit, setValue } = useForm();
-  const { createCategory_supplies, getOneCategory_supplies, updateCategory_supplies } = useCategorySupplies();
+  const { createCategory_products, getOneCategory_products, updateCategory_products } = useCategoryProducts();
   const navigate = useNavigate();
   const params = useParams();
 
   useEffect(() => {
     async function getOneCategory() {
       if (params.id) {
-        const get_One_Category = await getOneCategory_supplies(params.id);
+        const get_One_Category = await getOneCategory_products(params.id);
         console.log(get_One_Category);
         setValue('Nombre_Categoria', get_One_Category.Nombre_Categoria)
         setValue('Imagen', get_One_Category.Imagen)
@@ -23,11 +23,11 @@ function CreateCategorySupplies() {
 
   const onSubmit = handleSubmit(async (values) => {
     if (params.id) {
-      updateCategory_supplies(params.id, values)
+      updateCategory_products(params.id, values)
     } else {
-      createCategory_supplies(values);
+      createCategory_products(values);
     }
-    navigate('/list_category_supplies');
+    navigate('/list_category_products');
   })
 
   return (
@@ -41,4 +41,4 @@ function CreateCategorySupplies() {
   );
 }
 
-export default CreateCategorySupplies
+export default CreateCategoryProducts

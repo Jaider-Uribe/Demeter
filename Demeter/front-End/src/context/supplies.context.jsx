@@ -1,0 +1,71 @@
+import { createContext, useContext, useState } from "react";
+import { getSuppliesRequest, getSupplieRequest, createSuppliesRequest, updateSuppliesRequest, deleteSuppliesRequest } from "../api/supplies.request";
+
+const SuppliesContext = createContext();
+
+export const useSupplies = () => {
+    const context = useContext(SuppliesContext);
+
+    if (!context)
+        throw new Error("Ha ocurrido un error con el uso del contexto de los insumos");
+
+    return context;
+}
+
+export function Supplies({ children }) {
+    const [supplies, setSupplies] = useState([]);
+
+    const getSupplies = async () => {
+        try {
+            const res = await getSuppliesRequest();
+            setSupplies(res.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const getSupplie = async (id) => {
+        try {
+            const res = await getSupplieRequest(id);
+            return res.data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const createSupplies = async (supplie) => {
+        const res = await createSuppliesRequest(supplie)
+        console.log(res);
+    }
+
+    const updateSupplies = async (id, supplie) => {
+        try {
+            await updateSuppliesRequest(id, supplie)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deleteSupplies = async (id) => {
+        try {
+            const res = await deleteSuppliesRequest(id)
+            if (res.status === 204) setSupplies(supplies.filter(supplies => supplies.ID_INSUMO !== id))
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    return (
+        <SuppliesContext.Provider value={{
+            supplies,
+            getSupplies,
+            getSupplie,
+            createSupplies,
+            updateSupplies,
+            deleteSupplies
+        }}>
+            {children}
+        </SuppliesContext.Provider>
+    );
+}

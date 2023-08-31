@@ -14,7 +14,7 @@ export const getSupplie = async (req, res) => {
     try {
         const oneSupplie = await supplies.findOne({
             where: {
-                ID_INSUMOS: id
+                ID_INSUMO: id
             }
         });
         res.json(oneSupplie);
@@ -23,46 +23,48 @@ export const getSupplie = async (req, res) => {
     }
 };
 
-export const createSupplie = async (req, res) => {
+export const createSupplies = async (req, res) => {
     try {
         const { Nombre_Insumo, Cantidad_Insumo, Stock_Minimo, CATEGORIA_INSUMO_ID } = req.body;
 
-        const createSupplie = await supplies.create({
+        const createSupplies = await supplies.create({
             Nombre_Insumo,
             Cantidad_Insumo,
             Stock_Minimo,
             CATEGORIA_INSUMO_ID
         });
 
-        res.json(createSupplie);
+        res.json(createSupplies);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
-export const updateSupplie = async (req, res) => { 
+export const updateSupplies = async (req, res) => { 
     const { id } = req.params;
     try {
-        const updateSupplie = await supplies.findOne({
+        const updateSupplies = await supplies.findOne({
             where: {
-                ID_INSUMOS: id
+                ID_INSUMO: id
             }
         });
 
-        updateSupplie.set(req.body);
-        await updateSupplie.save();
-        return res.json(updateSupplie);           
+        updateSupplies.set(req.body);
+        await updateSupplies.save();
+        return res.json(updateSupplies);           
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
 
-export const deleteSupplie = async (req, res) => {
-    const { id } = req.params;
+export const deleteSupplies = async (req, res) => {
+    
     try {
-        const deleteSupplie = await supplies.destroy({
+        const { id } = req.params;
+        
+        await supplies.destroy({
             where: {
-                ID_INSUMOS: id
+                ID_INSUMO: id
             }
         });
         return res.sendStatus(204);

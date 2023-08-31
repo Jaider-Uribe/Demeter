@@ -2,6 +2,7 @@ import app from './app.js';
 import { sequelize } from './db/database.js';
 import './models/category_supplies.model.js'
 import './models/supplies.model.js';
+import './models/category_products.model.js';
 
 async function main(){
     try{
