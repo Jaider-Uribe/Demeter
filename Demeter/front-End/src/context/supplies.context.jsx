@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getSuppliesRequest, getSupplieRequest, createSuppliesRequest, updateSuppliesRequest, deleteSuppliesRequest } from "../api/supplies.request";
+import { getSuppliesRequest, getSupplieRequest, createSuppliesRequest, disableSuppliesRequest } from "../api/supplies.request";
 
 const SuppliesContext = createContext();
 
@@ -38,22 +38,20 @@ export function Supplies({ children }) {
         console.log(res);
     }
 
-    const updateSupplies = async (id, supplie) => {
+    const toggleSupplyStatus = async (id) => {
         try {
-            await updateSuppliesRequest(id, supplie)
-        } catch (error) {
-            console.error(error);
-        }
-    }
+            const res = await disableSuppliesRequest(id);
 
-    const deleteSupplies = async (id) => {
-        try {
-            const res = await deleteSuppliesRequest(id)
-            if (res.status === 204) setSupplies(supplies.filter(supplies => supplies.ID_INSUMO !== id))
+            if (res.status === 200) {
+                setSupplies((prevSupplies) =>
+                    prevSupplies.map((supply) =>
+                        supply.ID_INSUMO === id ? { ...supply, habilitado: !supply.habilitado } : supply
+                    )
+                );
+            }
         } catch (error) {
             console.log(error);
         }
-
     }
 
     return (
@@ -62,8 +60,7 @@ export function Supplies({ children }) {
             getSupplies,
             getSupplie,
             createSupplies,
-            updateSupplies,
-            deleteSupplies
+            toggleSupplyStatus 
         }}>
             {children}
         </SuppliesContext.Provider>

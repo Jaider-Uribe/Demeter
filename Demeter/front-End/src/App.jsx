@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from './components/Menu';
 import ListCategorySupplies from './pages/list_category_supplies';
 import CreateCategorySupplies from './pages/create_category_supplies';
 import { CategorySupplies } from './context/category_supplies.context';
@@ -15,21 +16,26 @@ function App() {
       <CategorySupplies>
         <Supplies>
           <BrowserRouter>
-            <main className='container mx-auto px-10'>
-              <Routes>
-                <Route path='/' element={<h1>Home</h1>} />
-                <Route path='/list_category_supplies' element={<ListCategorySupplies />} />
-                <Route path='/create_category_supplies' element={<CreateCategorySupplies />} />
-                <Route path='/create_category_supplies/:id' element={<CreateCategorySupplies />} />
-                <Route path='/list_supplies' element={<ListSupplies />} />
-                <Route path='/create_supplies' element={<CreateSupplies />} />
-                <Route path='/create_supplies/:id' element={<CreateSupplies />} />
-                <Route path='/list_category_products' element={<ListCategoryProducts />} />
-                <Route path='/create_category_products' element={<CreateCategoryProducts />} />
-                <Route path='/create_category_products/:id' element={<CreateCategoryProducts />} />
+          <div className="flex">
+              {/* Coloca el menú a la izquierda */}
+              <Menu />
 
-              </Routes>
-            </main>
+              {/* El contenido de las rutas estará a la derecha */}
+              <main className='container mx-auto px-10 flex-grow'>
+                <Routes>
+                  <Route path='/' element={<h1>Home</h1>} />
+                  <Route path='/list_category_supplies' element={<ListCategorySupplies />} />
+                  <Route path='/create_category_supplies' element={<CreateCategorySupplies />} />
+                  <Route path='/create_category_supplies/:id' element={<CreateCategorySupplies />} />
+                  <Route path='/list_supplies' element={<ListSupplies />} />
+                  <Route path='/create_supplies' element={<CreateSupplies />} />
+                  <Route path='/create_supplies/:id' element={<CreateSupplies />} />
+                  <Route path='/list_category_products' element={<ListCategoryProducts />} />
+                  <Route path='/create_category_products' element={<CreateCategoryProducts />} />
+                  <Route path='/create_category_products/:id' element={<CreateCategoryProducts />} />
+                </Routes>
+              </main>
+            </div>
           </BrowserRouter>
         </Supplies>
       </CategorySupplies>

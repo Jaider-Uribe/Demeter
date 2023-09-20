@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, updateCategory_suppliesRequest, deleteCategory_suppliesRequest } from "../api/category_supplies.request";
+import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, disableCategory_suppliesRequest } from "../api/category_supplies.request";
 
 const CategorySuppliesContext = createContext();
 
@@ -9,7 +9,7 @@ export const useCategorySupplies = () => {
     if (!context)
         throw new Error("Ha ocurrido un error con el uso del contexto de categoria de insumos");
 
-    return context;
+    return context; 
 }
 
 export function CategorySupplies({ children }) {
@@ -35,25 +35,22 @@ export function CategorySupplies({ children }) {
 
     const createCategory_supplies = async (category) => {
         const res = await createCategory_suppliesRequest(category)
-        console.log(res);
     }
 
-    const updateCategory_supplies = async (id, category) => {
+    const toggleCategorySupplyStatus = async (id) => {
         try {
-            await updateCategory_suppliesRequest(id, category)
-        } catch (error) {
-            console.error(error);
-        }
-    }
+            const res = await disableCategory_suppliesRequest(id);
 
-    const deleteCategory_supplies = async (id) => {
-        try {
-            const res = await deleteCategory_suppliesRequest(id)
-            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.ID_CATEGORIA_INSUMO !== id))
+            if (res.status === 200) {
+                setCategory_supplies((prevcategorySupplies) =>
+                prevcategorySupplies.map((category) =>
+                        category.ID_CATEGORIA_INSUMO === id ? { ...category, habilitado: !category.habilitado } : category
+                    )
+                );
+            }
         } catch (error) {
             console.log(error);
         }
-
     }
 
     return (
@@ -62,8 +59,7 @@ export function CategorySupplies({ children }) {
             getCategory_supplies,
             getOneCategory_supplies,
             createCategory_supplies,
-            updateCategory_supplies,
-            deleteCategory_supplies
+            toggleCategorySupplyStatus
         }}>
             {children}
         </CategorySuppliesContext.Provider>

@@ -2,28 +2,38 @@ import { DataTypes } from "sequelize";
 import { sequelize } from '../db/database.js';
 
 export const supplies = sequelize.define('INSUMOS', {
-    ID_INSUMOS: {
+    ID_INSUMO: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
     Nombre_Insumo: {
         type: DataTypes.STRING,
-        required: true,
-        trim: true
+        allowNull: false, 
+        unique: true, 
+        validate: {
+            customValidate(value) {
+                if (!/^[A-Z][a-z]*$/.test(value)) {
+                    throw new Error('El ombre del insumo debe tener solo la primera letra en mayúscula y las siguientes en minúscula.');
+                }
+            },
+        },
     },
     Cantidad_Insumo: {
-        type: DataTypes.SMALLINT,
-        required: true,
-        trim: true
-    },
-    Imagen: {
-        type: DataTypes.BLOB
+        type: DataTypes.INTEGER,
+        allowNull: false, 
+        validate: {
+            isInt: true, 
+            max: 9999, 
+        },
     },
     Stock_Minimo: {
         type: DataTypes.INTEGER,
-        required: true,
-        trim: true
+        allowNull: false,
+    },
+    habilitado: { 
+        type: DataTypes.BOOLEAN,
+        defaultValue: true, 
     }
 }, {
     timestamps: false

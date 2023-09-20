@@ -31,7 +31,8 @@ export const createSupplies = async (req, res) => {
             Nombre_Insumo,
             Cantidad_Insumo,
             Stock_Minimo,
-            CATEGORIA_INSUMO_ID
+            CATEGORIA_INSUMO_ID,
+            habilitado: true 
         });
 
         res.json(createSupplies);
@@ -40,34 +41,23 @@ export const createSupplies = async (req, res) => {
     }
 };
 
-export const updateSupplies = async (req, res) => { 
-    const { id } = req.params;
-    try {
-        const updateSupplies = await supplies.findOne({
-            where: {
-                ID_INSUMO: id
-            }
-        });
-
-        updateSupplies.set(req.body);
-        await updateSupplies.save();
-        return res.json(updateSupplies);           
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-};
-
-export const deleteSupplies = async (req, res) => {
-    
+export const disableSupplies = async (req, res) => {
     try {
         const { id } = req.params;
-        
-        await supplies.destroy({
+
+        const supply = await supplies.findOne({
             where: {
                 ID_INSUMO: id
             }
         });
-        return res.sendStatus(204);
+
+        if (!supply) {
+            return res.status(404).json({ message: 'Insumo no encontrado' });
+        }
+
+        const updatedSupply = await supply.update({ habilitado: !supply.habilitado });
+
+        res.json(updatedSupply);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

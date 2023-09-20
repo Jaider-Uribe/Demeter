@@ -10,12 +10,19 @@ export const category_products = sequelize.define('CATEGORIA_PRODUCTOS', {
     },
     Nombre_Categoria: {
         type: DataTypes.STRING,
-        required: true,
-        trim: true
+        allowNull: false, 
+        unique: true, 
+        validate: {
+            customValidate(value) {
+                if (!/^[A-Z][a-z]*$/.test(value)) {
+                    throw new Error('El nombre de la categoria debe tener solo la primera letra en mayúscula y las siguientes en minúscula.');
+                }
+            },
+        },
     },
-    Imagen: {
-        type: DataTypes.BLOB,
-        required: false
+    habilitado: { 
+        type: DataTypes.BOOLEAN,
+        defaultValue: true, 
     }
 }, {
     timestamps: false

@@ -3,6 +3,34 @@
 @tailwind utilities;
 
 body { 
-  background-color: #202020;
-  color: white;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);  
 }
+
+.contenedor {
+  margin-top: 130px;
+}
+
+.boton-izquierda {
+  margin-top: 220px;
+  margin-right: 340px;
+}
+
+.boton-derecha {
+  margin-top: 220px;
+  margin-left: -100px;
+}
+
+.boton-izquierda-2 {
+  margin-top: 320px;
+  margin-right: 340px;
+}
+
+.boton-derecha-2 {
+  margin-top: 320px;
+  margin-left: -100px;
+}
+
+
+
+

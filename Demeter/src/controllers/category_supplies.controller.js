@@ -29,48 +29,35 @@ export const getOneCategory_supplies = async (req, res) => {
 export const createCategory_supplies = async (req, res) => {
     
     try {
-        const { Nombre_Categoria, Imagen } = req.body
-        const newCategory_supplies = new category_supplies({
-            Nombre_Categoria,
-            Imagen
-        })
-
-        await newCategory_supplies.save();
+        const { Nombre_Categoria } = req.body
+        const newCategory_supplies = await category_supplies.create({
+            Nombre_Categoria : Nombre_Categoria,
+            habilitado: true
+        });
         res.json(newCategory_supplies);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 }
 
-export const updateCategory_supplies = async (req, res) => {
 
-    try {
-        const { id } = req.params;
-        const { Nombre_Categoria, Imagen } = req.body
-
-        const updateCategory_supplies = await category_supplies.findByPk(id)
-        updateCategory_supplies.Nombre_Categoria = Nombre_Categoria;
-        updateCategory_supplies.Imagen = Imagen;
-        await updateCategory_supplies.save();
-
-        res.json(updateCategory_supplies);
-
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
-    }
-}
-
-export const deleteCategory_supplies = async (req, res) => {
+export const disableCategory_supplies = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await category_supplies.destroy({
+        const categorySupply = await category_supplies.findOne({
             where: {
-                ID_CATEGORIA_INSUMO: id,
-            },
+                ID_CATEGORIA_INSUMO: id
+            }
         });
 
-        res.sendStatus(204);
+        if (!categorySupply) {
+            return res.status(404).json({ message: 'Insumo no encontrado' });
+        }
+
+        const updatedCategorySupply = await categorySupply.update({ habilitado: !categorySupply.habilitado });
+
+        res.json(updatedCategorySupply);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

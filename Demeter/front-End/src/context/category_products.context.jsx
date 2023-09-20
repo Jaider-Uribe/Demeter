@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getCategory_productsRequest, getOne_Category_productsRequest, createCategory_productsRequest, updateCategory_productsRequest, deleteCategory_productsRequest } from "../api/category_products.request";
+import { getCategory_productsRequest, getOne_Category_productsRequest, createCategory_productsRequest, disableCategory_productsRequest } from "../api/category_products.request";
 
 const CategoryProductsContext = createContext();
 
@@ -35,25 +35,22 @@ export function CategoryProducts({ children }) {
 
     const createCategory_products = async (category) => {
         const res = await createCategory_productsRequest(category)
-        console.log(res);
     }
 
-    const updateCategory_products = async (id, category) => {
+    const toggleCategoryProductStatus = async (id) => {
         try {
-            await updateCategory_productsRequest(id, category)
-        } catch (error) {
-            console.error(error);
-        }
-    }
+            const res = await disableCategory_productsRequest(id);
 
-    const deleteCategory_products = async (id) => {
-        try {
-            const res = await deleteCategory_productsRequest(id)
-            if (res.status === 204) setCategory_products(Category_products.filter(category => category.ID_CATEGORIA_PRODUCTO !== id))
+            if (res.status === 200) {
+                setCategory_products((prevCategoryProducts) =>
+                prevCategoryProducts.map((category) =>
+                        category.ID_CATEGORIA_PRODUCTOS === id ? { ...category, habilitado: !category.habilitado } : category
+                    )
+                );
+            }
         } catch (error) {
             console.log(error);
         }
-
     }
 
     return (
@@ -62,8 +59,7 @@ export function CategoryProducts({ children }) {
             getCategory_products,
             getOneCategory_products,
             createCategory_products,
-            updateCategory_products,
-            deleteCategory_products
+            toggleCategoryProductStatus
         }}>
             {children}
         </CategoryProductsContext.Provider>

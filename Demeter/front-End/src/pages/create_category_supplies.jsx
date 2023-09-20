@@ -1,44 +1,63 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCategorySupplies } from '../context/category_supplies.context.jsx';
-import { useEffect } from 'react';
 
 function CreateCategorySupplies() {
-  const { register, handleSubmit, setValue } = useForm();
-  const { createCategory_supplies, getOneCategory_supplies, updateCategory_supplies } = useCategorySupplies();
+  const { register, handleSubmit, formState: { errors }, setError  } = useForm();
+  const { createCategory_supplies, Category_supplies } = useCategorySupplies();
   const navigate = useNavigate();
-  const params = useParams();
-
-  useEffect(() => {
-    async function getOneCategory() {
-      if (params.id) {
-        const get_One_Category = await getOneCategory_supplies(params.id);
-        console.log(get_One_Category);
-        setValue('Nombre_Categoria', get_One_Category.Nombre_Categoria)
-        setValue('Imagen', get_One_Category.Imagen)
-      }
-    }
-    getOneCategory();
-  }, [])
 
   const onSubmit = handleSubmit(async (values) => {
-    if (params.id) {
-      updateCategory_supplies(params.id, values)
-    } else {
-      createCategory_supplies(values);
+    const isNameDuplicate = Category_supplies.some(category => category.Nombre_Categoria === values.Nombre_Categoria);
+
+    if (isNameDuplicate) {
+      setError('Nombre_Categoria', {
+        type: 'manual',
+        message: 'El nombre de la categoria ya existe.'
+      });
+      return;
     }
+    
+    createCategory_supplies(values);
     navigate('/list_category_supplies');
-  })
+  });
+
+  const onCancel = () => {
+    navigate('/list_category_supplies'); 
+  };
 
   return (
-    <div className='bg-zinc-800 max-w-md p-10 rounded-md'>
+    <div className='max-w-md mx-auto mt-20'>
       <form onSubmit={onSubmit}>
-        <label>Nombre de la categoria<input type="text" {...register("Nombre_Categoria", { required: true })} className='w-full bg-zinc-700 text-white px-4 py-2 rounded-md'></input></label>
-        <label>Imagen<input type="file" accept="image/*" {...register("Imagen", { required: false })} ></input></label>
-        <button type="submit">Guardar</button>
+        <div className='contenedor'>
+          <div className="mb-4">
+            <label className="sr-only">Nombre de la categoría</label>
+            <input
+              type="text"
+              {...register("Nombre_Categoria", {
+                required: 'Este campo es obligatorio',
+                pattern: {
+                  value: /^[A-Z][a-z]*$/,
+                  message: 'El nombre de la categoria debe tener la primera letra en mayúscula y solo letras.'
+                }
+              })}
+              placeholder="Nombre de la categoria"
+              className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
+            />
+            {errors.Nombre_Categoria && <p className="text-red-500">{errors.Nombre_Categoria.message}</p>}
+          </div>
+        </div>
+        <div className="mt-4 flex justify-between items-center">
+          <button type="submit" className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda-2' onClick={onSubmit}>
+            Confirmar
+          </button>
+          <button type="button" className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-derecha-2' onClick={onCancel}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );
 }
 
-export default CreateCategorySupplies
+export default CreateCategorySupplies;
