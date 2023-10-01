@@ -33,7 +33,7 @@ export const createCategory_products = async (req, res) => {
 
         const newCategory_products = new category_products({
             Nombre_Categoria,
-            habilitado: true
+            Estado: true
         })
         
         await newCategory_products.save();
@@ -58,9 +58,41 @@ export const disableCategory_products = async (req, res) => {
             return res.status(404).json({ message: 'Insumo no encontrado' });
         }
 
-        const updatedCategoryProduct = await categoryProducts.update({ habilitado: !categoryProducts.habilitado });
+        const updatedCategoryProduct = await categoryProducts.update({ Estado: !categoryProducts.Estado });
 
         res.json(updatedCategoryProduct);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const updateCategory_products = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const { Nombre_Categoria } = req.body
+
+        const updateCategory_products = await category_products.findByPk(id)
+        updateCategory_products.Nombre_Categoria = Nombre_Categoria;
+
+        await updateCategory_products.save();
+        res.json(updateCategory_products);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const deleteCategory_products = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await category_products.destroy({
+            where: {
+                ID_CATEGORIA_PRODUCTO: id,
+            },
+        });
+
+        res.sendStatus(204);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

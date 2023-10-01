@@ -13,8 +13,9 @@ export const supplies = sequelize.define('INSUMOS', {
         unique: true, 
         validate: {
             customValidate(value) {
-                if (!/^[A-Z][a-z]*$/.test(value)) {
-                    throw new Error('El ombre del insumo debe tener solo la primera letra en mayúscula y las siguientes en minúscula.');
+                
+                if (!/^[A-Z][a-zA-Z\s]*$/.test(value)) {
+                    throw new Error('El nombre del insumo debe comenzar con mayúscula y puede contener letras y espacios.');
                 }
             },
         },
@@ -24,14 +25,31 @@ export const supplies = sequelize.define('INSUMOS', {
         allowNull: false, 
         validate: {
             isInt: true, 
+            min: 0, 
             max: 9999, 
+        },
+    },
+    Medida_Insumo: {
+        type: DataTypes.STRING,
+        allowNull: false, 
+        validate: {
+            customValidate(value) {
+                if (!/^[A-Za-z\s()]+$/.test(value)) {
+                    throw new Error('La medida del insumo puede contener letras, espacios y paréntesis.');
+                }
+            },
         },
     },
     Stock_Minimo: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+            isInt: true,
+            min: 0,  
+            max: 9999, 
+        },
     },
-    habilitado: { 
+    Estado: { 
         type: DataTypes.BOOLEAN,
         defaultValue: true, 
     }

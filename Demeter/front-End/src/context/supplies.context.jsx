@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getSuppliesRequest, getSupplieRequest, createSuppliesRequest, disableSuppliesRequest } from "../api/supplies.request";
+import { getSuppliesRequest, getSupplieRequest, createSuppliesRequest, disableSuppliesRequest, updateSuppliesRequest, deleteSuppliesRequest } from "../api/supplies.request";
 
 const SuppliesContext = createContext();
 
@@ -34,8 +34,12 @@ export function Supplies({ children }) {
     }
 
     const createSupplies = async (supplie) => {
-        const res = await createSuppliesRequest(supplie)
-        console.log(res);
+        try {
+            const res = await createSuppliesRequest(supplie);
+            getSupplies();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const toggleSupplyStatus = async (id) => {
@@ -45,7 +49,7 @@ export function Supplies({ children }) {
             if (res.status === 200) {
                 setSupplies((prevSupplies) =>
                     prevSupplies.map((supply) =>
-                        supply.ID_INSUMO === id ? { ...supply, habilitado: !supply.habilitado } : supply
+                        supply.ID_INSUMO === id ? { ...supply, Estado: !supply.Estado } : supply
                     )
                 );
             }
@@ -54,13 +58,34 @@ export function Supplies({ children }) {
         }
     }
 
+    const updateSupplies = async (id, supplie) => {
+        try {
+            await updateSuppliesRequest(id, supplie);
+            getSupplies(); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deleteSupplies = async (id) => {
+        try {
+            const res = await deleteSuppliesRequest(id)
+            if (res.status === 204) setSupplies(supplies.filter(supplies => supplies.ID_INSUMO !== id))
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <SuppliesContext.Provider value={{
             supplies,
             getSupplies,
             getSupplie,
             createSupplies,
-            toggleSupplyStatus 
+            toggleSupplyStatus,
+            updateSupplies,
+            deleteSupplies
         }}>
             {children}
         </SuppliesContext.Provider>

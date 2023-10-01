@@ -14,13 +14,13 @@ export const category_supplies = sequelize.define('CATEGORIA_INSUMOS', {
         unique: true, 
         validate: {
             customValidate(value) {
-                if (!/^[A-Z][a-z]*$/.test(value)) {
+                if (!/^[A-ZÁ-Ú][a-zá-ú\s]*[a-zá-ú]$/.test(value)) {
                     throw new Error('El nombre de la categoria debe tener solo la primera letra en mayúscula y las siguientes en minúscula.');
                 }
             },
         },
     },
-    habilitado: { 
+    Estado: { 
         type: DataTypes.BOOLEAN,
         defaultValue: true, 
     }

@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, disableCategory_suppliesRequest } from "../api/category_supplies.request";
+import { createContext, useContext, useState, useEffect } from "react";
+import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, disableCategory_suppliesRequest, updateCategory_suppliesRequest, deleteCategory_suppliesRequest } from "../api/category_supplies.request";
 
 const CategorySuppliesContext = createContext();
 
@@ -9,11 +9,23 @@ export const useCategorySupplies = () => {
     if (!context)
         throw new Error("Ha ocurrido un error con el uso del contexto de categoria de insumos");
 
-    return context; 
+    return context;
 }
 
 export function CategorySupplies({ children }) {
     const [Category_supplies, setCategory_supplies] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Intenta cargar las categorías desde el almacenamiento local al montar el componente
+        const storedCategories = localStorage.getItem("categories");
+        if (storedCategories) {
+            setCategory_supplies(JSON.parse(storedCategories));
+            setLoading(false); // Marca la carga como completada
+        } else {
+            loadCategorySupplies();
+        }
+    }, []);
 
     const getCategory_supplies = async () => {
         try {
@@ -33,8 +45,20 @@ export function CategorySupplies({ children }) {
         }
     }
 
+    const loadCategorySupplies = async () => {
+        try {
+            const res = await getCategory_suppliesRequest();
+            setCategory_supplies(res.data);
+            setLoading(false); // Marca la carga como completada
+        } catch (error) {
+            console.error(error);
+            setLoading(false); // Marca la carga como fallida en caso de error
+        }
+    }
+
     const createCategory_supplies = async (category) => {
-        const res = await createCategory_suppliesRequest(category)
+        const res = await createCategory_suppliesRequest(category);
+        getCategory_supplies();
     }
 
     const toggleCategorySupplyStatus = async (id) => {
@@ -43,8 +67,8 @@ export function CategorySupplies({ children }) {
 
             if (res.status === 200) {
                 setCategory_supplies((prevcategorySupplies) =>
-                prevcategorySupplies.map((category) =>
-                        category.ID_CATEGORIA_INSUMO === id ? { ...category, habilitado: !category.habilitado } : category
+                    prevcategorySupplies.map((category) =>
+                        category.ID_CATEGORIA_INSUMO === id ? { ...category, Estado: !category.Estado } : category
                     )
                 );
             }
@@ -53,13 +77,35 @@ export function CategorySupplies({ children }) {
         }
     }
 
+    const updateCategory_supplies = async (id, category) => {
+        try {
+            await updateCategory_suppliesRequest(id, category);
+            getCategory_supplies();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deleteCategory_supplies = async (id) => {
+        try {
+            const res = await deleteCategory_suppliesRequest(id)
+            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.ID_CATEGORIA_INSUMO !== id))
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <CategorySuppliesContext.Provider value={{
             Category_supplies,
             getCategory_supplies,
             getOneCategory_supplies,
+            loadCategorySupplies,
             createCategory_supplies,
-            toggleCategorySupplyStatus
+            toggleCategorySupplyStatus,
+            updateCategory_supplies,
+            deleteCategory_supplies
         }}>
             {children}
         </CategorySuppliesContext.Provider>

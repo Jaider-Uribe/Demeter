@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getCategory_productsRequest, getOne_Category_productsRequest, createCategory_productsRequest, disableCategory_productsRequest } from "../api/category_products.request";
+import { getCategory_productsRequest, getOne_Category_productsRequest, createCategory_productsRequest, disableCategory_productsRequest, updateCategory_productsRequest, deleteCategory_productsRequest } from "../api/category_products.request";
 
 const CategoryProductsContext = createContext();
 
@@ -34,7 +34,8 @@ export function CategoryProducts({ children }) {
     }
 
     const createCategory_products = async (category) => {
-        const res = await createCategory_productsRequest(category)
+        const res = await createCategory_productsRequest(category);
+        getCategory_products();
     }
 
     const toggleCategoryProductStatus = async (id) => {
@@ -44,7 +45,7 @@ export function CategoryProducts({ children }) {
             if (res.status === 200) {
                 setCategory_products((prevCategoryProducts) =>
                 prevCategoryProducts.map((category) =>
-                        category.ID_CATEGORIA_PRODUCTOS === id ? { ...category, habilitado: !category.habilitado } : category
+                        category.ID_CATEGORIA_PRODUCTO === id ? { ...category, Estado: !category.Estado } : category
                     )
                 );
             }
@@ -53,13 +54,34 @@ export function CategoryProducts({ children }) {
         }
     }
 
+    const updateCategory_products = async (id, category) => {
+        try {
+            await updateCategory_productsRequest(id, category);
+            getCategory_products();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deleteCategory_products = async (id) => {
+        try {
+            const res = await deleteCategory_productsRequest(id)
+            if (res.status === 204) setCategory_products(Category_products.filter(category => category.ID_CATEGORIA_PRODUCTO !== id))
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <CategoryProductsContext.Provider value={{
             Category_products,
             getCategory_products,
             getOneCategory_products,
             createCategory_products,
-            toggleCategoryProductStatus
+            toggleCategoryProductStatus,
+            updateCategory_products,
+            deleteCategory_products
         }}>
             {children}
         </CategoryProductsContext.Provider>

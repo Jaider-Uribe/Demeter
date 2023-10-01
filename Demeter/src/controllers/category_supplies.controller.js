@@ -32,7 +32,7 @@ export const createCategory_supplies = async (req, res) => {
         const { Nombre_Categoria } = req.body
         const newCategory_supplies = await category_supplies.create({
             Nombre_Categoria : Nombre_Categoria,
-            habilitado: true
+            Estado: true
         });
         res.json(newCategory_supplies);
     } catch (error) {
@@ -55,9 +55,42 @@ export const disableCategory_supplies = async (req, res) => {
             return res.status(404).json({ message: 'Insumo no encontrado' });
         }
 
-        const updatedCategorySupply = await categorySupply.update({ habilitado: !categorySupply.habilitado });
+        const updatedCategorySupply = await categorySupply.update({ Estado: !categorySupply.Estado });
 
         res.json(updatedCategorySupply);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+ 
+export const updateCategory_supplies = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const { Nombre_Categoria} = req.body
+
+        const updateCategory_supplies = await category_supplies.findByPk(id)
+        updateCategory_supplies.Nombre_Categoria = Nombre_Categoria;
+        await updateCategory_supplies.save();
+
+        res.json(updateCategory_supplies);
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+export const deleteCategory_supplies = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await category_supplies.destroy({
+            where: {
+                ID_CATEGORIA_INSUMO: id,
+            },
+        });
+
+        res.sendStatus(204);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
