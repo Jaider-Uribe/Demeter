@@ -7,7 +7,7 @@ import EditCategorySuppliesModal from './edit_category_supplies';
 import DeleteCategorySuppliesModal from './delete_category_supplies';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { useSupplies } from "../context/supplies.context"; // Importa el contexto de insumos
+import { useSupplies } from "../context/supplies.context"; 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -21,15 +21,14 @@ function ListCategorySupplies() {
   const [categorySupplyToEdit, setCategorySupplyToEdit] = useState(null);
   const [categorySupplyToDelete, setCategorySupplyToDelete] = useState(null);
   const [isDataChanged, setIsDataChanged] = useState(false);
-  const [cannotDelete, setCannotDelete] = useState(null); // Agrega un estado para el mensaje de no se puede eliminar
+  const [cannotDelete, setCannotDelete] = useState(null); 
   const navigate = useNavigate();
 
-  const { supplies, getSupplies } = useSupplies(); // Obtiene la lista de insumos desde el contexto de insumos
+  const { supplies, getSupplies } = useSupplies(); 
 
-  // Cargar la lista de categorías de suministros al montar el componente
   useEffect(() => {
     getCategory_supplies();
-    getSupplies(); // Cargar la lista de insumos
+    getSupplies();
   }, []);
 
   if (Category_supplies.length < 0) return <h1>No hay categorías de suministros</h1>;
@@ -46,23 +45,20 @@ function ListCategorySupplies() {
   }, [searchTerm, Category_supplies]);
 
   const handleDelete = async (categorySupply) => {
-    // Verifica si algún insumo tiene el mismo ID_CATEGORIA_INSUMO que la categoría
     const isCategoryInUse = supplies.some(
       (supply) => supply.CATEGORIA_INSUMO_ID === categorySupply.ID_CATEGORIA_INSUMO
     );
 
     if (isCategoryInUse) {
-      // Si está asociada a algún insumo, muestra la ventana modal de "No se puede eliminar"
       setIsDeleteModalOpen(true);
       setCategorySupplyToDelete(categorySupply);
       setCannotDelete(
         'No se puede eliminar esta categoría de insumo porque está asociada a insumos existentes.'
       );
     } else {
-      // Si no está asociada a ningún insumo, muestra la ventana modal de confirmación para eliminar
       setIsDeleteModalOpen(true);
       setCategorySupplyToDelete(categorySupply);
-      setCannotDelete(null); // Reinicia el mensaje de "No se puede eliminar" si estaba configurado previamente
+      setCannotDelete(null);
     }
   };
 
@@ -77,7 +73,7 @@ function ListCategorySupplies() {
 
   const cancelDelete = () => {
     setCategorySupplyToDelete(null);
-    setCannotDelete(null); // Reinicia el mensaje de no se puede eliminar
+    setCannotDelete(null); 
     setIsDeleteModalOpen(false);
   };
 
@@ -90,7 +86,6 @@ function ListCategorySupplies() {
     setIsEditModalOpen(true);
   };
 
-  // Función para generar el informe PDF de categorías de suministros
   const generateCategorySuppliesPDF = () => {
     const docDefinition = {
       content: [
@@ -145,7 +140,6 @@ function ListCategorySupplies() {
           value={searchTerm}
           onChange={(e) => {
             const inputValue = e.target.value;
-            // Utiliza una expresión regular para permitir solo letras
             const filteredInput = inputValue.replace(/[^a-zA-Z]/g, '');
             setSearchTerm(filteredInput);
           }}

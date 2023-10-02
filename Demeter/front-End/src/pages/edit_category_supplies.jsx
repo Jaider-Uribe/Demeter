@@ -11,23 +11,19 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
 
   const onSubmit = handleSubmit(async (values) => {
     if (values.Nombre_Categoria !== categorySupplyToEdit.Nombre_Categoria) {
-      // El nombre ha cambiado, verificar si ya existe en otras categorías.
-      const duplicateCategory_supply = Category_supplies.some(category => 
+      const duplicateCategory_supply = Category_supplies.some(category =>
         category.ID_CATEGORIA_INSUMO !== categorySupplyToEdit.ID_CATEGORIA_INSUMO &&
         category.Nombre_Categoria === values.Nombre_Categoria
       );
 
       if (duplicateCategory_supply) {
-        // Mostrar un mensaje de error.
         setDuplicateError('Esta categoría de insumos ya existe.');
         return;
       } else {
-        // No hay error, así que limpiamos el mensaje de error.
         setDuplicateError('');
       }
     }
-
-    // Si el nombre es el mismo o no existe en otras categorías, se permite la actualización.
+    
     updateCategory_supplies(categorySupplyToEdit.ID_CATEGORIA_INSUMO, values);
     onClose();
   });

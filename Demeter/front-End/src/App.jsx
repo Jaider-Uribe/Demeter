@@ -17,10 +17,7 @@ function App() {
         <Supplies>
           <BrowserRouter>
           <div className="flex">
-              {/* Coloca el menú a la izquierda */}
               <Menu />
-
-              {/* El contenido de las rutas estará a la derecha */}
               <main className='container mx-auto px-10 flex-grow'>
                 <Routes>
                   <Route path='/' element={<h1>Home</h1>} />

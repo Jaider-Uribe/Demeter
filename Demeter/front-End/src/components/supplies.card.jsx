@@ -7,12 +7,10 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
     const { toggleSupplyStatus } = useSupplies();
     const { Category_supplies } = useCategorySupplies();
 
-    // Encontrar la categoría asociada al suministro por su ID
     const category = Category_supplies.find(
         (category) => category.ID_CATEGORIA_INSUMO === supplies.CATEGORIA_INSUMO_ID
     );
 
-    // Determinar las clases para la barra y el círculo
     const barraClass = supplies.Estado ? "" : "desactivado";
 
     return (
@@ -37,10 +35,10 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
             </td>
             <td className="border border-gray-400 px-4 py-2 text-center">
                 <button onClick={onEdit} className="text-orange-500 hover:text-orange-700 mr-2">
-                    <AiFillEdit size={24} /> {/* Ajustamos el tamaño del ícono */}
+                    <AiFillEdit size={24} /> 
                 </button>
                 <button onClick={onDelete} className="text-red-500 hover:text-red-800 mr-2">
-                    <AiFillDelete size={24} /> {/* Cambiamos el ícono y color */}
+                    <AiFillDelete size={24} /> 
                 </button>
             </td>
         </tr>

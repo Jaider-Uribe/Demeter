@@ -18,7 +18,6 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
     { label: 'Kilo (kl)', value: 'Kilo (kl)' },
   ];
 
-  // Define el objeto de opciones de categorías
   const categoryOptions = Category_supplies.map(option => ({
     label: option.Nombre_Categoria,
     value: option.ID_CATEGORIA_INSUMO
@@ -173,7 +172,7 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
             menuPlacement="auto"
             menuShouldScrollIntoView={false}
             maxMenuHeight={132}
-            styles={customStyles} // Estilo personalizado similar al de create_supplies.jsx
+            styles={customStyles} 
             theme={(theme) => ({
               ...theme,
               colors: {

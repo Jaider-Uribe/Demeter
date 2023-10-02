@@ -34,7 +34,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isSelected ? '#e36209' : state.isFocused ? '#e36209' : 'white',
-      color: state.isSelected ? 'white' : state.isFocused ? '#555' : '#201E1E', // Cambiamos el color a gris (#555) cuando está seleccionado o enfocado
+      color: state.isSelected ? 'white' : state.isFocused ? '#555' : '#201E1E', 
       '&:hover': {
         backgroundColor: '#e36209',
         color: 'white',
@@ -172,7 +172,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
           <label htmlFor="CATEGORIA_INSUMO_ID" className="mb-2 block">Categoría del insumo:</label>
           <Select
             options={[
-              { label: 'Seleccionar categoría', value: '', isDisabled: true }, // Cambiamos el valor inicial a una cadena vacía y lo deshabilitamos
+              { label: 'Seleccionar categoría', value: '', isDisabled: true }, 
               ...categoryOptions
             ]}
             {...register("CATEGORIA_INSUMO_ID")}

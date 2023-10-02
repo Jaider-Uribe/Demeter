@@ -17,11 +17,10 @@ export function CategorySupplies({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Intenta cargar las categorías desde el almacenamiento local al montar el componente
         const storedCategories = localStorage.getItem("categories");
         if (storedCategories) {
             setCategory_supplies(JSON.parse(storedCategories));
-            setLoading(false); // Marca la carga como completada
+            setLoading(false); 
         } else {
             loadCategorySupplies();
         }
@@ -49,10 +48,10 @@ export function CategorySupplies({ children }) {
         try {
             const res = await getCategory_suppliesRequest();
             setCategory_supplies(res.data);
-            setLoading(false); // Marca la carga como completada
+            setLoading(false); 
         } catch (error) {
             console.error(error);
-            setLoading(false); // Marca la carga como fallida en caso de error
+            setLoading(false); 
         }
     }
 

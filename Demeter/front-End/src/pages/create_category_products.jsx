@@ -18,11 +18,11 @@ function CreateCategoryProductsModal({ onClose }) {
     }
 
     createCategory_products(values);
-    onClose(); // Cerrar el modal después de enviar el formulario
+    onClose(); 
   });
 
   const onCancel = () => {
-    onClose(); // Cerrar el modal si se cancela
+    onClose(); 
   };
 
   return (

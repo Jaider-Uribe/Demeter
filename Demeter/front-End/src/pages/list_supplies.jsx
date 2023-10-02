@@ -44,7 +44,7 @@ function ListSupplies() {
   };
   
   const handleCreated = () => {
-    getSupplies(); // Actualizar la lista de insumos
+    getSupplies(); 
   };
 
   const handleEdit = (supply) => {
@@ -83,9 +83,9 @@ function ListSupplies() {
               ['Nombre', 'Cantidad', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
               ...filteredSupplies.map((supply) => [
                 supply.Nombre_Insumo,
-                supply.Cantidad_Insumo || '', // Asegura que haya un valor, incluso si es una cadena vacía
+                supply.Cantidad_Insumo || '', 
                 supply.Medida_Insumo,
-                supply.Stock_Minimo || '', // Asegura que haya un valor, incluso si es una cadena vacía
+                supply.Stock_Minimo || '', 
                 supply.CATEGORIA_INSUMO_ID ? (
                   Category_supplies.find((category) => category.ID_CATEGORIA_INSUMO === supply.CATEGORIA_INSUMO_ID)?.Nombre_Categoria || ''
                 ) : '',
@@ -104,7 +104,7 @@ function ListSupplies() {
       },
     };
 
-    pdfMake.createPdf(docDefinition).download('Lista_de_Insumos.pdf'); // Descarga el PDF
+    pdfMake.createPdf(docDefinition).download('Lista_de_Insumos.pdf'); 
   };
 
   return (

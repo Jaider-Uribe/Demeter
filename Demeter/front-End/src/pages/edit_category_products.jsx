@@ -11,18 +11,15 @@ function EditCategoryProductsModal({ onClose, categoryProductToEdit }) {
 
   const onSubmit = handleSubmit(async (values) => {
     if (values.Nombre_Categoria !== categoryProductToEdit.Nombre_Categoria) {
-      // El nombre ha cambiado, verificar si ya existe en otras categorías.
       const duplicateCategory_product = Category_products.some(category =>
         category.ID_CATEGORIA_PRODUCTO !== categoryProductToEdit.ID_CATEGORIA_PRODUCTO &&
         category.Nombre_Categoria === values.Nombre_Categoria
       );
 
       if (duplicateCategory_product) {
-        // Mostrar un mensaje de error.
         setDuplicateError('Esta categoría de productos ya existe.');
         return;
       } else {
-        // No hay error, así que limpiamos el mensaje de error.
         setDuplicateError('');
       }
     }
