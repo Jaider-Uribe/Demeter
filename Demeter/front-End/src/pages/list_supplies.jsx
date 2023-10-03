@@ -21,6 +21,9 @@ function ListSupplies() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [supplyToEdit, setSupplyToEdit] = useState(null);
   const [supplyToDelete, setSupplyToDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
+
 
   useEffect(() => {
     getSupplies();
@@ -42,9 +45,9 @@ function ListSupplies() {
   const navigateToCreateSupplies = () => {
     setIsModalOpen(true);
   };
-  
+
   const handleCreated = () => {
-    getSupplies(); 
+    getSupplies();
   };
 
   const handleEdit = (supply) => {
@@ -70,6 +73,15 @@ function ListSupplies() {
     setIsDeleteModalOpen(false);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const suppliesToDisplay = supplies.slice(startIndex, endIndex);
+
+
   const generatePDF = () => {
     const docDefinition = {
       content: [
@@ -83,9 +95,9 @@ function ListSupplies() {
               ['Nombre', 'Cantidad', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
               ...filteredSupplies.map((supply) => [
                 supply.Nombre_Insumo,
-                supply.Cantidad_Insumo || '', 
+                supply.Cantidad_Insumo || '',
                 supply.Medida_Insumo,
-                supply.Stock_Minimo || '', 
+                supply.Stock_Minimo || '',
                 supply.CATEGORIA_INSUMO_ID ? (
                   Category_supplies.find((category) => category.ID_CATEGORIA_INSUMO === supply.CATEGORIA_INSUMO_ID)?.Nombre_Categoria || ''
                 ) : '',
@@ -104,7 +116,7 @@ function ListSupplies() {
       },
     };
 
-    pdfMake.createPdf(docDefinition).download('Lista_de_Insumos.pdf'); 
+    pdfMake.createPdf(docDefinition).download('Lista_de_Insumos.pdf');
   };
 
   return (
@@ -149,7 +161,7 @@ function ListSupplies() {
           </tr>
         </thead>
         <tbody>
-          {filteredSupplies.map((supply) => (
+          {suppliesToDisplay.map((supply) => (
             <SuppliesCard
               supplies={supply}
               key={supply.ID_INSUMO}
@@ -184,6 +196,27 @@ function ListSupplies() {
           </div>
         </div>
       )}
+
+      <div className="pagination">
+      <div className="pagination text-center mt-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline mr-2"
+        >
+          Anterior
+        </button>
+        <span>Página {currentPage}</span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={endIndex >= supplies.length}
+          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline ml-2"
+        >
+          Siguiente
+        </button>
+      </div>
+      </div>
+
     </div>
   );
 }
