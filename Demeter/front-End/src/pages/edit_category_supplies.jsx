@@ -34,7 +34,7 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
 
   return (
     <div className='max-w-md mx-auto p-4 down'>
-      <h1 className="text-3xl font-semibold text-center mb-4">Editar Categoría</h1>
+      <h1 className="text-3xl font-semibold text-center mb-4">Editar categoría</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4 inferior">
           <label htmlFor="Nombre_Categoria" className="mb-2 block">Nombre de la categoría:</label>
@@ -44,7 +44,7 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
-                message: 'El nombre de la categoría debe tener la primera letra en mayúscula y solo letras.'
+                message: 'El nombre de la categoría debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.'
               }
             })}
             placeholder="Nombre de la categoría"

@@ -7,7 +7,7 @@ import EditCategorySuppliesModal from './edit_category_supplies';
 import DeleteCategorySuppliesModal from './delete_category_supplies';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { useSupplies } from "../context/supplies.context"; 
+import { useSupplies } from "../context/supplies.context";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -21,17 +21,19 @@ function ListCategorySupplies() {
   const [categorySupplyToEdit, setCategorySupplyToEdit] = useState(null);
   const [categorySupplyToDelete, setCategorySupplyToDelete] = useState(null);
   const [isDataChanged, setIsDataChanged] = useState(false);
-  const [cannotDelete, setCannotDelete] = useState(null); 
-  const navigate = useNavigate();
+  const [cannotDelete, setCannotDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 7;
 
-  const { supplies, getSupplies } = useSupplies(); 
+
+  const { supplies, getSupplies } = useSupplies();
 
   useEffect(() => {
     getCategory_supplies();
     getSupplies();
   }, []);
 
-  if (Category_supplies.length < 0) return <h1>No hay categorías de suministros</h1>;
+  if (Category_supplies.length < 0) return <h1>No hay categorías de insumos</h1>;
 
   useEffect(() => {
     if (searchTerm === '') {
@@ -73,7 +75,7 @@ function ListCategorySupplies() {
 
   const cancelDelete = () => {
     setCategorySupplyToDelete(null);
-    setCannotDelete(null); 
+    setCannotDelete(null);
     setIsDeleteModalOpen(false);
   };
 
@@ -85,6 +87,15 @@ function ListCategorySupplies() {
     setCategorySupplyToEdit(categorySupply);
     setIsEditModalOpen(true);
   };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const categorySuppliesToDisplay = Category_supplies.slice(startIndex, endIndex);
+
 
   const generateCategorySuppliesPDF = () => {
     const docDefinition = {
@@ -130,7 +141,7 @@ function ListCategorySupplies() {
         <button
           onClick={generateCategorySuppliesPDF}
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '445px' }}
+          style={{ marginLeft: '900px' }}
         >
           Generar PDF
         </button>
@@ -155,7 +166,7 @@ function ListCategorySupplies() {
           </tr>
         </thead>
         <tbody>
-          {filteredSupplies.map(category_supply => (
+          {categorySuppliesToDisplay.map(category_supply => (
             <CategorySuppliesCard
               Category_supplies={category_supply}
               key={category_supply.ID_CATEGORIA_INSUMO}
@@ -194,6 +205,26 @@ function ListCategorySupplies() {
           </div>
         </div>
       )}
+
+      <div className="pagination">
+        <div className="pagination text-center mt-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline mr-2"
+          >
+            Anterior
+          </button>
+          <span>Página {currentPage}</span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={endIndex >= Category_supplies.length}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline ml-2"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

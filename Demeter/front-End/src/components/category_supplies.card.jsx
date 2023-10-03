@@ -15,11 +15,7 @@ function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
       </td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">
         <div
-          className={`barra-container ${barraClass}`}
-          onClick={() =>
-            toggleCategorySupplyStatus(Category_supplies.ID_CATEGORIA_INSUMO)
-          }
-        >
+          className={`barra-container ${barraClass} adjust-two`} onClick={() => toggleCategorySupplyStatus(Category_supplies.ID_CATEGORIA_INSUMO)} >
           <div className={`circulo ${barraClass}`}>
             {Category_supplies.Estado ? (
               <MdToggleOn className={`estado-icon active ${barraClass}`} />

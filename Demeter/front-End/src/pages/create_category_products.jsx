@@ -18,11 +18,11 @@ function CreateCategoryProductsModal({ onClose }) {
     }
 
     createCategory_products(values);
-    onClose(); 
+    onClose();
   });
 
   const onCancel = () => {
-    onClose(); 
+    onClose();
   };
 
   return (
@@ -30,16 +30,17 @@ function CreateCategoryProductsModal({ onClose }) {
       <div className='modal-overlay' onClick={onCancel}></div>
       <div className='modal-container'>
         <div className='max-w-md mx-auto mt-4 p-4'>
+          <h1 className="text-3xl font-semibold text-center mb-4">Crear categoría</h1>
           <form onSubmit={onSubmit}>
             <div className='mb-4 inferior'>
-            <label htmlFor="Nombre_Categoria" className="mb-2 block">Nombre de la categoría:</label>
+              <label htmlFor="Nombre_Categoria" className="mb-2 block">Nombre de la categoría:</label>
               <input
                 type='text'
                 {...register('Nombre_Categoria', {
                   required: 'Este campo es obligatorio',
                   pattern: {
                     value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
-                    message: 'El nombre de la categoría debe tener la primera letra en mayúscula y solo letras.'
+                    message: 'El nombre de la categoría debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.'
                   }
                 })}
                 placeholder='Nombre de la categoría'

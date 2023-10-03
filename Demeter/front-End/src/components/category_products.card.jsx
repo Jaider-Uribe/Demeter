@@ -15,11 +15,7 @@ function CategoryProductsCard({ Category_products, onEdit, onDelete }) {
       </td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column" >
         <div
-          className={`barra-container ${barraClass}`}
-          onClick={() =>
-            toggleCategoryProductStatus(Category_products.ID_CATEGORIA_PRODUCTO)
-          }
-        >
+          className={`barra-container ${barraClass} adjust-two`}  onClick={() => toggleCategoryProductStatus(Category_products.ID_CATEGORIA_PRODUCTO)}>
           <div className={`circulo ${barraClass}`}>
             {Category_products.Estado ? (
               <MdToggleOn className={`estado-icon active ${barraClass}`} />

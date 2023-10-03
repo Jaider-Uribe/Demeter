@@ -94,7 +94,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
-                message: 'El nombre del insumo debe tener la primera letra en mayúscula y solo letras.'
+                message: 'El nombre del insumo debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.'
               }
             })}
             placeholder="Nombre del insumo"
@@ -111,7 +111,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
               validate: (value) => {
                 const parsedValue = parseInt(value);
                 if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 9999) {
-                  return 'La cantidad del insumo debe ser un número entero entre 0 y 9999.';
+                  return 'La cantidad del insumo debe ser un número entero entre 0 y 9.999.';
                 }
                 return true;
               }
@@ -152,9 +152,9 @@ function CreateSuppliesModal({ onClose, onCreated }) {
                 const parsedValue = parseInt(value);
                 const parsedCantidadInsumo = parseInt(Cantidad_Insumo);
 
-                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 9999) {
-                  return 'El stock mínimo debe ser un número entero entre 0 y 9999.';
-                }
+                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 999999) {
+                  return 'El stock mínimo debe ser un número entero entre 0 y 999.999.';
+                } 
 
                 if (parsedValue > parsedCantidadInsumo) {
                   return `El stock mínimo no puede ser mayor que la cantidad de insumo (${parsedCantidadInsumo}).`;

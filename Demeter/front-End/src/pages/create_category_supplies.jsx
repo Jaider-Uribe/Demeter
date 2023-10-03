@@ -37,7 +37,7 @@ function CreateCategorySuppliesModal({ onClose }) {
                 required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
-                  message: 'El nombre de la categoría debe tener la primera letra en mayúscula y solo letras.'
+                  message: 'El nombre de la categoría debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.'
                 }
               })}
               placeholder="Nombre de la categoría"
