@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import CategorySuppliesCard from '../components/category_supplies.card';
 import { useCategorySupplies } from '../context/category_supplies.context';
 import CreateCategorySuppliesModal from './create_category_supplies';
@@ -14,7 +13,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 function ListCategorySupplies() {
   const { Category_supplies, getCategory_supplies, deleteCategory_supplies } = useCategorySupplies();
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredSupplies, setFilteredSupplies] = useState([]);
+  const [filteredCategorySupplies, setFilteredCategorySupplies] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -37,12 +36,12 @@ function ListCategorySupplies() {
 
   useEffect(() => {
     if (searchTerm === '') {
-      setFilteredSupplies(Category_supplies);
+      setFilteredCategorySupplies(Category_supplies);
     } else {
       const filtered = Category_supplies.filter(category_supply =>
         category_supply.Nombre_Categoria.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredSupplies(filtered);
+      setFilteredCategorySupplies(filtered);
     }
   }, [searchTerm, Category_supplies]);
 
@@ -94,39 +93,7 @@ function ListCategorySupplies() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const categorySuppliesToDisplay = Category_supplies.slice(startIndex, endIndex);
-
-
-  const generateCategorySuppliesPDF = () => {
-    const docDefinition = {
-      content: [
-        { text: 'Lista de categorías de suministros', style: 'header' },
-        { text: ' ', margin: [0, 10] },
-        {
-          table: {
-            headerRows: 1,
-            widths: ['*', '*'],
-            body: [
-              ['Nombre', 'Estado'],
-              ...Category_supplies.map((categorySupply) => [
-                categorySupply.Nombre_Categoria,
-                categorySupply.Estado ? 'Habilitado' : 'Deshabilitado',
-              ]),
-            ],
-          },
-        },
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center',
-        },
-      },
-    };
-
-    pdfMake.createPdf(docDefinition).download('Lista_de_Categorias_de_Suministros.pdf');
-  };
+  const categorySuppliesToDisplay = filteredCategorySupplies.slice(startIndex, endIndex);
 
   return (
     <div className="mx-auto mt-4 contenedor">
@@ -137,13 +104,6 @@ function ListCategorySupplies() {
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
         >
           Crear categoría
-        </button>
-        <button
-          onClick={generateCategorySuppliesPDF}
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '900px' }}
-        >
-          Generar PDF
         </button>
         <input
           type="text"

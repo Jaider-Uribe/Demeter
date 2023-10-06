@@ -132,7 +132,7 @@ function ListSupplies() {
         <button
           onClick={generatePDF}
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '900px' }}
+          style={{ marginLeft: '46%' }}
         >
           Generar PDF
         </button>

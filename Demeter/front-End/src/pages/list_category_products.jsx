@@ -4,10 +4,6 @@ import CategoryProductsCard from '../components/category_products.card';
 import CreateCategoryProductsModal from './create_category_products';
 import EditCategoryProductsModal from './edit_category_products';
 import DeleteCategoryProductsModal from './delete_category_products';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function ListCategoryProducts() {
   const { Category_products, getCategory_products, deleteCategory_products } = useCategoryProducts();
@@ -73,38 +69,7 @@ function ListCategoryProducts() {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const categoryProductsToDisplay = Category_products.slice(startIndex, endIndex);
-
-  const generateCategoryProductsPDF = () => {
-    const docDefinition = {
-      content: [
-        { text: 'Lista de categorías de productos', style: 'header' },
-        { text: ' ', margin: [0, 10] },
-        {
-          table: {
-            headerRows: 1,
-            widths: ['*', '*'],
-            body: [
-              ['Nombre', 'Estado'],
-              ...filteredCategoryProducts.map((categoryProduct) => [
-                categoryProduct.Nombre_Categoria,
-                categoryProduct.Estado ? 'Habilitado' : 'Deshabilitado',
-              ]),
-            ],
-          },
-        },
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          alignment: 'center',
-        },
-      },
-    };
-
-    pdfMake.createPdf(docDefinition).download('Lista_de_Categorias_de_Productos.pdf');
-  };
+  const categoryProductsToDisplay = filteredCategoryProducts.slice(startIndex, endIndex);
 
   return (
     <div className="mx-auto mt-4 contenedor">
@@ -115,13 +80,6 @@ function ListCategoryProducts() {
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
         >
           Crear categoría
-        </button>
-        <button
-          onClick={generateCategoryProductsPDF}
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '900px' }}
-        >
-          Generar PDF
         </button>
         <input
           type="text"

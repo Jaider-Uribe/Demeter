@@ -32,7 +32,7 @@ export const createCategory_supplies = async (req, res) => {
         const { Nombre_Categoria } = req.body
         const newCategory_supplies = await category_supplies.create({
             Nombre_Categoria : Nombre_Categoria,
-            Estado,
+            Estado: true,
         });
         res.json(newCategory_supplies);
     } catch (error) {

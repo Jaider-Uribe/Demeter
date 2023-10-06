@@ -17,7 +17,7 @@ function DeleteCategorySuppliesModal({ onClose, cannotDelete, onConfirmDelete })
           {cannotDelete ? (
             <button
               onClick={onClose}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded"
+              className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded ml-32"
             >
               Cerrar
             </button>

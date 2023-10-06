@@ -33,7 +33,7 @@ export const createCategory_products = async (req, res) => {
 
         const newCategory_products = new category_products({
             Nombre_Categoria,
-            Estado,
+            Estado: true,
         })
         
         await newCategory_products.save();

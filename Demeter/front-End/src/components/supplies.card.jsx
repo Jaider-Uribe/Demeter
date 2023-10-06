@@ -27,14 +27,26 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
       </td>
       <td className="border border-gray-400 px-4 py-2 text-center">
         <div style={{ display: "flex", alignItems: "center" }}>
-          <button onClick={onEdit} className="text-orange-500 hover:text-orange-700 mr-2">
+          <button
+            onClick={onEdit}
+            className={`text-orange-500 hover:text-orange-700 mr-2 ${!supplies.Estado ? "text-gray-400 cursor-not-allowed" : ""}`}
+            disabled={!supplies.Estado}
+          >
             <AiFillEdit size={24} />
           </button>
-          <button onClick={onDelete} className="text-red-500 hover:text-red-800 mr-2" style={{ marginRight: "-40px" }}>
+          <button
+            onClick={onDelete}
+            className={`text-red-500 hover:text-red-800 mr-2 ${!supplies.Estado ? "text-gray-400 cursor-not-allowed" : ""}`}
+            style={{ marginRight: "-20px" }}
+            disabled={!supplies.Estado}
+          >
             <AiFillDelete size={24} />
           </button>
-          <div className={`barra-container ${barraClass} adjust`} onClick={() => toggleSupplyStatus(supplies.ID_INSUMO)}>
-            <div className={`circulo ${barraClass}`} style={{ marginRight: "-30px" }}>
+          <div
+            className={`barra-container ${barraClass} adjust`}
+            onClick={() => toggleSupplyStatus(supplies.ID_INSUMO)}
+          >
+            <div className={` ${barraClass}`} style={{ marginRight: "-30px" }}>
               {supplies.Estado ? (
                 <MdToggleOn className={`estado-icon active ${barraClass}`} />
               ) : (
