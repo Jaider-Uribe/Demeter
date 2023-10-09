@@ -13,9 +13,10 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
   const { Category_supplies } = useCategorySupplies();
 
   const measureOptions = [
+    { label: 'Kilogramos (kg)', value: 'Kilogramos (kg)' },
+    { label: 'Gramos (g)', value: 'Gramos (g)' },
     { label: 'Litros (L)', value: 'Litros (L)' },
     { label: 'Mililitros (ml)', value: 'Mililitros (ml)' },
-    { label: 'Kilo (kl)', value: 'Kilo (kl)' },
   ];
 
   const categoryOptions = Category_supplies.map(option => ({
@@ -148,8 +149,8 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
               required: 'Este campo es obligatorio',
               validate: (value) => {
                 const parsedValue = parseInt(value);
-                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 9999) {
-                  return 'El stock mínimo debe ser menor a la cantidad del insumo y deber ser un número entero entre 0 y 9999 .';
+                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 999) {
+                  return 'El stock mínimo debe ser deber ser un número entero entre 0 y 999.';
                 }
                 return true;
               }

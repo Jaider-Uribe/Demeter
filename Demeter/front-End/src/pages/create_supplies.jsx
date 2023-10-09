@@ -13,12 +13,11 @@ function CreateSuppliesModal({ onClose, onCreated }) {
 
   const measureOptions = [
     { label: 'Seleccionar medida', value: '', isDisabled: true },
+    { label: 'Kilogramos (kg)', value: 'Kilogramos (kg)' },
+    { label: 'Gramos (g)', value: 'Gramos (g)' },
     { label: 'Litros (L)', value: 'Litros (L)' },
     { label: 'Mililitros (ml)', value: 'Mililitros (ml)' },
-    { label: 'Kilo (kl)', value: 'Kilo (kl)' },
-    { label: 'UNO', value: 'UNO' },
-    { label: 'Dos', value: 'Dos' },
-    { label: 'Tres', value: 'Tres' },
+
   ];
 
   const categoryOptions = Category_supplies.map(option => ({ label: option.Nombre_Categoria, value: option.ID_CATEGORIA_INSUMO }));
@@ -152,8 +151,8 @@ function CreateSuppliesModal({ onClose, onCreated }) {
                 const parsedValue = parseInt(value);
                 const parsedCantidadInsumo = parseInt(Cantidad_Insumo);
 
-                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 999999) {
-                  return 'El stock mínimo debe ser un número entero entre 0 y 999.999.';
+                if (isNaN(parsedValue) || parsedValue < 0 || parsedValue > 999) {
+                  return 'El stock mínimo debe ser un número entero entre 0 y 999.';
                 } 
 
                 if (parsedValue > parsedCantidadInsumo) {

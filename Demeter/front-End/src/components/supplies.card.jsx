@@ -26,11 +26,11 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
         {supplies.Estado ? "Habilitado" : "Deshabilitado"}
       </td>
       <td className="border border-gray-400 px-4 py-2 text-center">
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex" }}>
           <button
             onClick={onEdit}
             className={`text-orange-500 hover:text-orange-700 mr-2 ${!supplies.Estado ? "text-gray-400 cursor-not-allowed" : ""}`}
-            disabled={!supplies.Estado}
+            disabled={!supplies.Estado} style={{ marginLeft: "17%"}}
           >
             <AiFillEdit size={24} />
           </button>

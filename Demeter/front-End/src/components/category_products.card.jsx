@@ -20,7 +20,7 @@ function CategoryProductsCard({ Category_products, onEdit, onDelete }) {
             onClick={onEdit}
             className={`text-orange-500 hover:text-orange-700 mr-2 ${!Category_products.Estado ? "text-gray-400 cursor-not-allowed" : ""}`}
             disabled={!Category_products.Estado}
-            style={{ marginLeft: "40px" }}
+            style={{ marginLeft: "24%" }}
           >
             <AiFillEdit size={24} />
           </button>

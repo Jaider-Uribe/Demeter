@@ -43,8 +43,8 @@ function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
                 ? "text-gray-400 cursor-not-allowed"
                 : ""
             }`}
-            disabled={!Category_supplies.Estado || !canChangeCategoryStatus}
-            style={{ marginLeft: "40px" }}
+          disabled={!Category_supplies.Estado} 
+            style={{ marginLeft: "24%" }}
           >
             <AiFillEdit size={24} />
           </button>
@@ -56,7 +56,7 @@ function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
                 : ""
             }`}
             style={{ marginRight: "-25px" }}
-            disabled={!Category_supplies.Estado || !canChangeCategoryStatus}
+            disabled={!Category_supplies.Estado }
           >
             <AiFillDelete size={24} />
           </button>

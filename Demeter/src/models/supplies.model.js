@@ -46,7 +46,7 @@ export const supplies = sequelize.define('INSUMOS', {
         validate: {
             isInt: true,
             min: 0,  
-            max: 9999, 
+            max: 999, 
         },
     },
     Estado: { 

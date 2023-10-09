@@ -92,10 +92,10 @@ function ListSupplies() {
             headerRows: 1,
             widths: ['*', '*', '*', '*', '*', '*'],
             body: [
-              ['Nombre', 'Cantidad', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
+              ['Nombre', 'Peso', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
               ...filteredSupplies.map((supply) => [
                 supply.Nombre_Insumo,
-                supply.Cantidad_Insumo || '',
+                supply.Peso_insumo || '',
                 supply.Medida_Insumo,
                 supply.Stock_Minimo || '',
                 supply.CATEGORIA_INSUMO_ID ? (
@@ -132,7 +132,7 @@ function ListSupplies() {
         <button
           onClick={generatePDF}
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '46%' }}
+          style={{ marginLeft: '64%' }}
         >
           Generar PDF
         </button>
@@ -152,7 +152,7 @@ function ListSupplies() {
         <thead>
           <tr className="bg-[#201E1E] text-white">
             <th className="border border-gray-400 px-4 py-2 w-1/7">Nombre</th>
-            <th className="border border-gray-400 px-4 py-2 w-1/7">Cantidad</th>
+            <th className="border border-gray-400 px-4 py-2 w-1/7">Peso</th>
             <th className="border border-gray-400 px-7 py-2 w-1/7">Medida</th>
             <th className="border border-gray-400 px-4 py-2 w-1/7">Stock Mínimo</th>
             <th className="border border-gray-400 px-2 py-2 w-1/7">Categoría asociada</th>
