@@ -2,13 +2,13 @@ import { DataTypes } from "sequelize";
 import { sequelize } from '../db/database.js';
 import { supplies } from "./supplies.model.js";
 
-export const category_supplies = sequelize.define('CATEGORIA_INSUMOS', {
-    ID_CATEGORIA_INSUMO: {
+export const category_supplies = sequelize.define('SUPPLIES_CATEGORY', {
+    Id_Category: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    Nombre_Categoria: {
+    Name: {
         type: DataTypes.STRING,
         allowNull: false, 
         unique: true, 
@@ -20,7 +20,7 @@ export const category_supplies = sequelize.define('CATEGORIA_INSUMOS', {
             },
         },
     },
-    Estado: { 
+    State: { 
         type: DataTypes.BOOLEAN,
         defaultValue: true, 
     }
@@ -29,12 +29,12 @@ export const category_supplies = sequelize.define('CATEGORIA_INSUMOS', {
 });
 
 category_supplies.hasMany(supplies, {
-    foreignKey: 'CATEGORIA_INSUMO_ID',
-    sourcekey: 'ID_CATEGORIA_INSUMO'
+    foreignKey: 'Category_Id',
+    sourcekey: 'Id_Category'
 });
 
 supplies.belongsTo (category_supplies, {
-    foreignKey: 'CATEGORIA_INSUMO_ID',
-    target: 'ID_CATEGORIA_INSUMO'
+    foreignKey: 'Category_Id',
+    target: 'Id_Category'
 });
 

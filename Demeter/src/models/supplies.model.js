@@ -1,13 +1,13 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../db/database.js';
 
-export const supplies = sequelize.define('INSUMOS', {
-    ID_INSUMO: {
+export const supplies = sequelize.define('SUPPLIES', {
+    Id_Supplies: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    Nombre_Insumo: {
+    Name: {
         type: DataTypes.STRING,
         allowNull: false, 
         unique: true, 
@@ -20,7 +20,7 @@ export const supplies = sequelize.define('INSUMOS', {
             },
         },
     },
-    Cantidad_Insumo: {
+    Unit: {
         type: DataTypes.INTEGER,
         allowNull: false, 
         validate: {
@@ -29,7 +29,7 @@ export const supplies = sequelize.define('INSUMOS', {
             max: 9999, 
         },
     },
-    Medida_Insumo: {
+    Measure: {
         type: DataTypes.STRING,
         allowNull: false, 
         validate: {
@@ -40,7 +40,7 @@ export const supplies = sequelize.define('INSUMOS', {
             },
         },
     },
-    Stock_Minimo: {
+    Stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
@@ -49,7 +49,7 @@ export const supplies = sequelize.define('INSUMOS', {
             max: 999, 
         },
     },
-    Estado: { 
+    State: { 
         type: DataTypes.BOOLEAN,
         defaultValue: true, 
     }

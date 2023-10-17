@@ -10,10 +10,10 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
   const [duplicateError, setDuplicateError] = useState('');
 
   const onSubmit = handleSubmit(async (values) => {
-    if (values.Nombre_Categoria !== categorySupplyToEdit.Nombre_Categoria) {
+    if (values.Name !== categorySupplyToEdit.Name) {
       const duplicateCategory_supply = Category_supplies.some(category =>
-        category.ID_CATEGORIA_INSUMO !== categorySupplyToEdit.ID_CATEGORIA_INSUMO &&
-        category.Nombre_Categoria === values.Nombre_Categoria
+        category.Id_Category !== categorySupplyToEdit.Id_Category &&
+        category.Name === values.Name
       );
 
       if (duplicateCategory_supply) {
@@ -24,7 +24,7 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
       }
     }
     
-    updateCategory_supplies(categorySupplyToEdit.ID_CATEGORIA_INSUMO, values);
+    updateCategory_supplies(categorySupplyToEdit.Id_Category, values);
     onClose();
   });
 
@@ -37,10 +37,10 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
       <h1 className="text-3xl font-semibold text-center mb-4">Editar categoría</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4 inferior">
-          <label htmlFor="Nombre_Categoria" className="mb-2 block">Nombre de la categoría:</label>
+          <label htmlFor="Name" className="mb-2 block">Nombre de la categoría:</label>
           <input
             type="text"
-            {...register("Nombre_Categoria", {
+            {...register("Name", {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -51,7 +51,7 @@ function EditCategorySuppliesModal({ onClose, categorySupplyToEdit }) {
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
           {duplicateError && <p className="text-red-500">{duplicateError}</p>}
-          {errors.Nombre_Categoria && <p className="text-red-500">{errors.Nombre_Categoria.message}</p>}
+          {errors.Name && <p className="text-red-500">{errors.Name.message}</p>}
         </div>
         <div className="mt-4 flex justify-between items-center">
           <button type="submit" className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda'>

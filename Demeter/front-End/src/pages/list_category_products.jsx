@@ -29,7 +29,7 @@ function ListCategoryProducts() {
       setFilteredCategoryProducts(Category_products);
     } else {
       const filtered = Category_products.filter(category_product =>
-        category_product.Nombre_Categoria.toLowerCase().includes(searchTerm.toLowerCase())
+        category_product.Name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCategoryProducts(filtered);
     }
@@ -51,7 +51,7 @@ function ListCategoryProducts() {
 
   const confirmDelete = () => {
     if (categoryProductToDelete) {
-      deleteCategory_products(categoryProductToDelete.ID_CATEGORIA_PRODUCTO);
+      deleteCategory_products(categoryProductToDelete.Id_Category);
       setCategoryProductToDelete(null);
       setIsDeleteModalOpen(false);
       setIsDataChanged(true);
@@ -105,7 +105,7 @@ function ListCategoryProducts() {
           {categoryProductsToDisplay.map(categoryProduct => (
             <CategoryProductsCard
               Category_products={categoryProduct}
-              key={categoryProduct.ID_CATEGORIA_PRODUCTO}
+              key={categoryProduct.Id_Category}
               onEdit={() => handleEdit(categoryProduct)}
               onDelete={() => handleDelete(categoryProduct)}
             />

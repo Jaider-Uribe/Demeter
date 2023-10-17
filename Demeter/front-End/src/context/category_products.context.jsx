@@ -45,7 +45,7 @@ export function CategoryProducts({ children }) {
             if (res.status === 200) {
                 setCategory_products((prevCategoryProducts) =>
                 prevCategoryProducts.map((category) =>
-                        category.ID_CATEGORIA_PRODUCTO === id ? { ...category, Estado: !category.Estado } : category
+                        category.Id_Category === id ? { ...category, State: !category.State } : category
                     )
                 );
             }
@@ -66,7 +66,7 @@ export function CategoryProducts({ children }) {
     const deleteCategory_products = async (id) => {
         try {
             const res = await deleteCategory_productsRequest(id)
-            if (res.status === 204) setCategory_products(Category_products.filter(category => category.ID_CATEGORIA_PRODUCTO !== id))
+            if (res.status === 204) setCategory_products(Category_products.filter(category => category.Id_Category !== id))
         } catch (error) {
             console.log(error);
         }

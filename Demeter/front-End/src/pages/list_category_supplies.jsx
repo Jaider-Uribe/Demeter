@@ -39,7 +39,7 @@ function ListCategorySupplies() {
       setFilteredCategorySupplies(Category_supplies);
     } else {
       const filtered = Category_supplies.filter(category_supply =>
-        category_supply.Nombre_Categoria.toLowerCase().includes(searchTerm.toLowerCase())
+        category_supply.Name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCategorySupplies(filtered);
     }
@@ -47,7 +47,7 @@ function ListCategorySupplies() {
 
   const handleDelete = async (categorySupply) => {
     const isCategoryInUse = supplies.some(
-      (supply) => supply.CATEGORIA_INSUMO_ID === categorySupply.ID_CATEGORIA_INSUMO
+      (supply) => supply.Category_Id === categorySupply.Id_Category
     );
 
     if (isCategoryInUse) {
@@ -65,7 +65,7 @@ function ListCategorySupplies() {
 
   const confirmDelete = () => {
     if (categorySupplyToDelete) {
-      deleteCategory_supplies(categorySupplyToDelete.ID_CATEGORIA_INSUMO);
+      deleteCategory_supplies(categorySupplyToDelete.Id_Category);
       setCategorySupplyToDelete(null);
       setIsDeleteModalOpen(false);
       setIsDataChanged(true);
@@ -129,7 +129,7 @@ function ListCategorySupplies() {
           {categorySuppliesToDisplay.map(category_supply => (
             <CategorySuppliesCard
               Category_supplies={category_supply}
-              key={category_supply.ID_CATEGORIA_INSUMO}
+              key={category_supply.Id_Category}
               onEdit={() => handleEdit(category_supply)}
               onDelete={() => handleDelete(category_supply)}
             />

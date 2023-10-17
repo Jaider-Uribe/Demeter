@@ -15,7 +15,7 @@ export const getOneCategory_supplies = async (req, res) => {
         const { id } = req.params;
         const oneCategory_supplies = await category_supplies.findOne({
             where: {
-                ID_CATEGORIA_INSUMO: id
+                Id_Category: id
             }
         });
 
@@ -29,10 +29,10 @@ export const getOneCategory_supplies = async (req, res) => {
 export const createCategory_supplies = async (req, res) => {
     
     try {
-        const { Nombre_Categoria } = req.body
+        const { Name } = req.body
         const newCategory_supplies = await category_supplies.create({
-            Nombre_Categoria : Nombre_Categoria,
-            Estado: true,
+            Name,
+            State: true,
         });
         res.json(newCategory_supplies);
     } catch (error) {
@@ -47,7 +47,7 @@ export const disableCategory_supplies = async (req, res) => {
 
         const categorySupply = await category_supplies.findOne({
             where: {
-                ID_CATEGORIA_INSUMO: id
+                Id_Category: id
             }
         });
 
@@ -55,7 +55,7 @@ export const disableCategory_supplies = async (req, res) => {
             return res.status(404).json({ message: 'Insumo no encontrado' });
         }
 
-        const updatedCategorySupply = await categorySupply.update({ Estado: !categorySupply.Estado });
+        const updatedCategorySupply = await categorySupply.update({ State: !categorySupply.State });
 
         res.json(updatedCategorySupply);
     } catch (error) {
@@ -67,10 +67,10 @@ export const updateCategory_supplies = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const { Nombre_Categoria} = req.body
+        const { Name} = req.body
 
         const updateCategory_supplies = await category_supplies.findByPk(id)
-        updateCategory_supplies.Nombre_Categoria = Nombre_Categoria;
+        updateCategory_supplies.Name = Name;
         await updateCategory_supplies.save();
 
         res.json(updateCategory_supplies);
@@ -86,7 +86,7 @@ export const deleteCategory_supplies = async (req, res) => {
 
         await category_supplies.destroy({
             where: {
-                ID_CATEGORIA_INSUMO: id,
+                Id_Category: id,
             },
         });
 
@@ -100,7 +100,7 @@ export const getSupplies_Category = async (req, res) => {
     const { id } = req.params;
     const arraySupplies = await supplies.findAll({
         where: {
-            CATEGORIA_INSUMO_ID: id
+            Id_Category: id
         }
     });
     res.json(arraySupplies);

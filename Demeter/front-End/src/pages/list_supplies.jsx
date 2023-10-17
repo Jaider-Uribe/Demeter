@@ -36,7 +36,7 @@ function ListSupplies() {
       setFilteredSupplies(supplies);
     } else {
       const filtered = supplies.filter((supply) =>
-        supply.Nombre_Insumo.toLowerCase().includes(searchTerm.toLowerCase())
+        supply.Name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredSupplies(filtered);
     }
@@ -62,7 +62,7 @@ function ListSupplies() {
 
   const confirmDelete = () => {
     if (supplyToDelete) {
-      deleteSupplies(supplyToDelete.ID_INSUMO);
+      deleteSupplies(supplyToDelete.Id_Supplies);
       setSupplyToDelete(null);
       setIsDeleteModalOpen(false);
     }
@@ -94,14 +94,14 @@ function ListSupplies() {
             body: [
               ['Nombre', 'Peso', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
               ...filteredSupplies.map((supply) => [
-                supply.Nombre_Insumo,
-                supply.Peso_insumo || '',
-                supply.Medida_Insumo,
-                supply.Stock_Minimo || '',
-                supply.CATEGORIA_INSUMO_ID ? (
-                  Category_supplies.find((category) => category.ID_CATEGORIA_INSUMO === supply.CATEGORIA_INSUMO_ID)?.Nombre_Categoria || ''
+                supply.Name,
+                supply.Unit || '',
+                supply.Measure,
+                supply.Stock || '',
+                supply.Category_Id ? (
+                  Category_supplies.find((category) => category.Id_Category === supply.Category_Id)?.Name || ''
                 ) : '',
-                supply.Estado ? 'Habilitado' : 'Deshabilitado',
+                supply.State ? 'Habilitado' : 'Deshabilitado',
               ]),
             ],
           },
@@ -164,7 +164,7 @@ function ListSupplies() {
           {suppliesToDisplay.map((supply) => (
             <SuppliesCard
               supplies={supply}
-              key={supply.ID_INSUMO}
+              key={supply.Id_Supplies}
               onEdit={() => handleEdit(supply)}
               onDelete={() => handleDelete(supply)}
             />

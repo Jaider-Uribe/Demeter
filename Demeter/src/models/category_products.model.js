@@ -2,13 +2,13 @@ import { DataTypes } from "sequelize";
 import { sequelize } from '../db/database.js';
 // import { products } from "./products.model.js";
 
-export const category_products = sequelize.define('CATEGORIA_PRODUCTOS', {
-    ID_CATEGORIA_PRODUCTO: {
+export const category_products = sequelize.define('PRODUCT_CATEGORY', {
+    Id_Category: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    Nombre_Categoria: {
+    Name: {
         type: DataTypes.STRING,
         allowNull: false, 
         unique: true, 
@@ -20,7 +20,7 @@ export const category_products = sequelize.define('CATEGORIA_PRODUCTOS', {
             },
         },
     },
-    Estado: { 
+    State: { 
         type: DataTypes.BOOLEAN,
         defaultValue: true, 
     }
@@ -29,12 +29,12 @@ export const category_products = sequelize.define('CATEGORIA_PRODUCTOS', {
 });
 
 // category_products.hasMany(products, {
-//     foreignKey: 'CATEGORIA_PRODUCTO_ID',
-//     sourcekey: 'ID_CATEGORIA_PRODUCTO'
+//     foreignKey: 'Category_Id',
+//     sourcekey: 'Id_Category'
 // });
 
 // products.belongsTo (category_products, {
-//     foreignKey: 'CATEGORIA_PRODUCTO_ID',
-//     target: 'ID_CATEGORIA_PRODUCTO'
+//     foreignKey: 'Category_Id',
+//     target: 'Id_Category'
 // });
 

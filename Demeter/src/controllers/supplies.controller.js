@@ -14,7 +14,7 @@ export const getSupplie = async (req, res) => {
     try {
         const oneSupplie = await supplies.findOne({
             where: {
-                ID_INSUMO: id
+                Id_Supplies: id
             }
         });
         res.json(oneSupplie);
@@ -25,15 +25,15 @@ export const getSupplie = async (req, res) => {
 
 export const createSupplies = async (req, res) => {
     try {
-        const { Nombre_Insumo, Cantidad_Insumo, Medida_Insumo, Stock_Minimo, CATEGORIA_INSUMO_ID } = req.body;
+        const { Name, Unit, Measure, Stock, Category_Id } = req.body;
 
         const createSupplies = await supplies.create({
-            Nombre_Insumo,
-            Cantidad_Insumo,
-            Medida_Insumo,
-            Stock_Minimo,
-            CATEGORIA_INSUMO_ID,
-            Estado: true 
+            Name,
+            Unit,
+            Measure,
+            Stock,
+            Category_Id,
+            State: true 
         });
 
         res.json(createSupplies);
@@ -48,7 +48,7 @@ export const disableSupplies = async (req, res) => {
 
         const supply = await supplies.findOne({
             where: {
-                ID_INSUMO: id
+                Id_Supplies: id
             }
         });
 
@@ -56,7 +56,7 @@ export const disableSupplies = async (req, res) => {
             return res.status(404).json({ message: 'Insumo no encontrado' });
         }
 
-        const updatedSupply = await supply.update({ Estado: !supply.Estado });
+        const updatedSupply = await supply.update({ State: !supply.State });
 
         res.json(updatedSupply);
     } catch (error) {
@@ -69,7 +69,7 @@ export const updateSupplies = async (req, res) => {
     try {
         const updateSupplies = await supplies.findOne({
             where: {
-                ID_INSUMO: id
+                Id_Supplies: id
             }
         });
 
@@ -88,7 +88,7 @@ export const deleteSupplies = async (req, res) => {
         
         await supplies.destroy({
             where: {
-                ID_INSUMO: id
+                Id_Supplies: id
             }
         });
         return res.sendStatus(204);

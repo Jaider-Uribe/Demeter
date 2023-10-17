@@ -13,6 +13,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
 
   const measureOptions = [
     { label: 'Seleccionar medida', value: '', isDisabled: true },
+    { label: 'Unidad(es)', value: 'Unidad(es)' },
     { label: 'Kilogramos (kg)', value: 'Kilogramos (kg)' },
     { label: 'Gramos (g)', value: 'Gramos (g)' },
     { label: 'Litros (L)', value: 'Litros (L)' },
@@ -20,7 +21,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
 
   ];
 
-  const categoryOptions = Category_supplies.map(option => ({ label: option.Nombre_Categoria, value: option.ID_CATEGORIA_INSUMO }));
+  const categoryOptions = Category_supplies.map(option => ({ label: option.Name, value: option.Id_Category }));
 
   const customStyles = {
     control: (provided, state) => ({
@@ -43,10 +44,10 @@ function CreateSuppliesModal({ onClose, onCreated }) {
   };
 
   const onSubmit = handleSubmit(async (values) => {
-    const isNameDuplicate = supplies.some(supply => supply.Nombre_Insumo === values.Nombre_Insumo);
+    const isNameDuplicate = supplies.some(supply => supply.Name === values.Name);
 
     if (isNameDuplicate) {
-      setError('Nombre_Insumo', {
+      setError('Name', {
         type: 'manual',
         message: 'El nombre del insumo ya existe.'
       });
@@ -54,7 +55,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
     }
 
     if (!selectedMeasure || selectedMeasure.value === '') {
-      setError('Medida_Insumo', {
+      setError('Measure', {
         type: 'manual',
         message: 'Debes seleccionar una medida.'
       });
@@ -62,15 +63,15 @@ function CreateSuppliesModal({ onClose, onCreated }) {
     }
 
     if (!selectedCategory || selectedCategory.value === '') {
-      setError('CATEGORIA_INSUMO_ID', {
+      setError('Category_Id', {
         type: 'manual',
         message: 'Debes seleccionar una categoría.'
       });
       return;
     }
 
-    values.Medida_Insumo = selectedMeasure.value;
-    values.CATEGORIA_INSUMO_ID = selectedCategory.value;
+    values.Measure = selectedMeasure.value;
+    values.Category_Id = selectedCategory.value;
 
     createSupplies(values);
     onCreated();
@@ -86,10 +87,10 @@ function CreateSuppliesModal({ onClose, onCreated }) {
       <h1 className="text-3xl font-semibold text-center mb-4">Crear insumo</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4">
-          <label htmlFor="Nombre_Insumo" className="mb-2 block">Nombre del insumo:</label>
+          <label htmlFor="Name" className="mb-2 block">Nombre del insumo:</label>
           <input
             type="text"
-            {...register("Nombre_Insumo", {
+            {...register("Name", {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -99,13 +100,13 @@ function CreateSuppliesModal({ onClose, onCreated }) {
             placeholder="Nombre del insumo"
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
-          {errors.Nombre_Insumo && <p className="text-red-500">{errors.Nombre_Insumo.message}</p>}
+          {errors.Name && <p className="text-red-500">{errors.Name.message}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="Cantidad_Insumo" className="mb-2 block">Cantidad del insumo:</label>
+          <label htmlFor="Unit" className="mb-2 block">Cantidad del insumo:</label>
           <input
             type="number"
-            {...register("Cantidad_Insumo", {
+            {...register("Unit", {
               required: 'Este campo es obligatorio',
               validate: (value) => {
                 const parsedValue = parseInt(value);
@@ -118,13 +119,13 @@ function CreateSuppliesModal({ onClose, onCreated }) {
             placeholder="Cantidad del insumo"
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
-          {errors.Cantidad_Insumo && <p className="text-red-500">{errors.Cantidad_Insumo.message}</p>}
+          {errors.Unit && <p className="text-red-500">{errors.Unit.message}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="Medida_Insumo" className="mb-2 block">Medida del insumo:</label>
+          <label htmlFor="Measure" className="mb-2 block">Medida del insumo:</label>
           <Select
             options={measureOptions}
-            {...register("Medida_Insumo")}
+            {...register("Measure")}
             value={selectedMeasure}
             onChange={(selectedOption) => setSelectedMeasure(selectedOption)}
             menuPlacement="auto"
@@ -139,13 +140,13 @@ function CreateSuppliesModal({ onClose, onCreated }) {
               },
             })}
           />
-          {errors.Medida_Insumo && <p className="text-red-500">{errors.Medida_Insumo.message}</p>}
+          {errors.Measure && <p className="text-red-500">{errors.Measure.message}</p>}
         </div>
         <div className="mb-4">
-          <label htmlFor="Stock_Minimo" className="mb-2 block">Stock mínimo:</label>
+          <label htmlFor="Stock" className="mb-2 block">Stock mínimo:</label>
           <input
             type="number"
-            {...register("Stock_Minimo", {
+            {...register("Stock", {
               required: 'Este campo es obligatorio',
               validate: (value, { Cantidad_Insumo }) => {
                 const parsedValue = parseInt(value);
@@ -165,16 +166,16 @@ function CreateSuppliesModal({ onClose, onCreated }) {
             placeholder="Stock mínimo"
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
-          {errors.Stock_Minimo && <p className="text-red-500">{errors.Stock_Minimo.message}</p>}
+          {errors.Stock && <p className="text-red-500">{errors.Stock.message}</p>}
         </div>
         <div className="mb-4 inferior">
-          <label htmlFor="CATEGORIA_INSUMO_ID" className="mb-2 block">Categoría del insumo:</label>
+          <label htmlFor="Category_Id" className="mb-2 block">Categoría del insumo:</label>
           <Select
             options={[
               { label: 'Seleccionar categoría', value: '', isDisabled: true }, 
               ...categoryOptions
             ]}
-            {...register("CATEGORIA_INSUMO_ID")}
+            {...register("Category_Id")}
             value={selectedCategory}
             onChange={(selectedOption) => setSelectedCategory(selectedOption)}
             menuPlacement="auto"
@@ -189,7 +190,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
               },
             })}
           />
-          {errors.CATEGORIA_INSUMO_ID && <p className="text-red-500">{errors.CATEGORIA_INSUMO_ID.message}</p>}
+          {errors.Category_Id && <p className="text-red-500">{errors.Category_Id.message}</p>}
         </div>
         <div className="mt-4 flex justify-between items-center">
           <button type="submit" className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda'>

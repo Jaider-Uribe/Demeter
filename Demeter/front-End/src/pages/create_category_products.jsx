@@ -7,10 +7,10 @@ function CreateCategoryProductsModal({ onClose }) {
   const { createCategory_products, Category_products } = useCategoryProducts();
 
   const onSubmit = handleSubmit(async (values) => {
-    const isNameDuplicate = Category_products.some(category => category.Nombre_Categoria === values.Nombre_Categoria);
+    const isNameDuplicate = Category_products.some(category => category.Name === values.Name);
 
     if (isNameDuplicate) {
-      setError('Nombre_Categoria', {
+      setError('Name', {
         type: 'manual',
         message: 'El nombre de la categoría ya existe.'
       });
@@ -33,10 +33,10 @@ function CreateCategoryProductsModal({ onClose }) {
           <h1 className="text-3xl font-semibold text-center mb-4">Crear categoría</h1>
           <form onSubmit={onSubmit}>
             <div className='mb-4 inferior'>
-              <label htmlFor="Nombre_Categoria" className="mb-2 block">Nombre de la categoría:</label>
+              <label htmlFor="Name" className="mb-2 block">Nombre de la categoría:</label>
               <input
                 type='text'
-                {...register('Nombre_Categoria', {
+                {...register('Name', {
                   required: 'Este campo es obligatorio',
                   pattern: {
                     value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -46,7 +46,7 @@ function CreateCategoryProductsModal({ onClose }) {
                 placeholder='Nombre de la categoría'
                 className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
               />
-              {errors.Nombre_Categoria && <p className='text-red-500'>{errors.Nombre_Categoria.message}</p>}
+              {errors.Name && <p className='text-red-500'>{errors.Name.message}</p>}
             </div>
             <div className='mt-4 flex justify-between items-center'>
               <button type='submit' className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda'>

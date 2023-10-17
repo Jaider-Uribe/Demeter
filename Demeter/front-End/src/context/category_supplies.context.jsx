@@ -67,7 +67,7 @@ export function CategorySupplies({ children }) {
             if (res.status === 200) {
                 setCategory_supplies((prevcategorySupplies) =>
                     prevcategorySupplies.map((category) =>
-                        category.ID_CATEGORIA_INSUMO === id ? { ...category, Estado: !category.Estado } : category
+                        category.Id_Category === id ? { ...category, State: !category.State } : category
                     )
                 );
             }
@@ -88,7 +88,7 @@ export function CategorySupplies({ children }) {
     const deleteCategory_supplies = async (id) => {
         try {
             const res = await deleteCategory_suppliesRequest(id)
-            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.ID_CATEGORIA_INSUMO !== id))
+            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.Id_Category !== id))
         } catch (error) {
             console.log(error);
         }
