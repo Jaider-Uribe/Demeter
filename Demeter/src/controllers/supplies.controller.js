@@ -14,7 +14,7 @@ export const getSupplie = async (req, res) => {
     try {
         const oneSupplie = await supplies.findOne({
             where: {
-                Id_Supplies: id
+                ID_Supplies: id
             }
         });
         res.json(oneSupplie);
@@ -25,14 +25,14 @@ export const getSupplie = async (req, res) => {
 
 export const createSupplies = async (req, res) => {
     try {
-        const { Name, Unit, Measure, Stock, Category_Id } = req.body;
+        const { Name_Supplies, Unit, Measure, Stock, SuppliesCategory_ID } = req.body;
 
         const createSupplies = await supplies.create({
-            Name,
+            Name_Supplies,
             Unit,
             Measure,
             Stock,
-            Category_Id,
+            SuppliesCategory_ID,
             State: true 
         });
 
@@ -48,7 +48,7 @@ export const disableSupplies = async (req, res) => {
 
         const supply = await supplies.findOne({
             where: {
-                Id_Supplies: id
+                ID_Supplies: id
             }
         });
 
@@ -69,7 +69,7 @@ export const updateSupplies = async (req, res) => {
     try {
         const updateSupplies = await supplies.findOne({
             where: {
-                Id_Supplies: id
+                ID_Supplies: id
             }
         });
 
@@ -88,7 +88,7 @@ export const deleteSupplies = async (req, res) => {
         
         await supplies.destroy({
             where: {
-                Id_Supplies: id
+                ID_Supplies: id
             }
         });
         return res.sendStatus(204);

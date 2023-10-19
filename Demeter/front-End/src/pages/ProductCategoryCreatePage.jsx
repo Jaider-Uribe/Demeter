@@ -1,16 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useCategoryProducts } from '../context/category_products.context.jsx';
+import { useCategoryProducts } from '../context/productcategory.context.jsx';
 
 function CreateCategoryProductsModal({ onClose }) {
   const { register, handleSubmit, formState: { errors }, setError } = useForm();
   const { createCategory_products, Category_products } = useCategoryProducts();
 
   const onSubmit = handleSubmit(async (values) => {
-    const isNameDuplicate = Category_products.some(category => category.Name === values.Name);
+    const isNameDuplicate = Category_products.some(category => category.Name_ProductCategory === values.Name_ProductCategory);
 
     if (isNameDuplicate) {
-      setError('Name', {
+      setError('Name_ProductCategory', {
         type: 'manual',
         message: 'El nombre de la categoría ya existe.'
       });
@@ -33,10 +33,10 @@ function CreateCategoryProductsModal({ onClose }) {
           <h1 className="text-3xl font-semibold text-center mb-4">Crear categoría</h1>
           <form onSubmit={onSubmit}>
             <div className='mb-4 inferior'>
-              <label htmlFor="Name" className="mb-2 block">Nombre de la categoría:</label>
+              <label htmlFor="Name_ProductCategory" className="mb-2 block">Nombre de la categoría:</label>
               <input
                 type='text'
-                {...register('Name', {
+                {...register('Name_ProductCategory', {
                   required: 'Este campo es obligatorio',
                   pattern: {
                     value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -46,7 +46,7 @@ function CreateCategoryProductsModal({ onClose }) {
                 placeholder='Nombre de la categoría'
                 className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
               />
-              {errors.Name && <p className='text-red-500'>{errors.Name.message}</p>}
+              {errors.Name_ProductCategory && <p className='text-red-500'>{errors.Name_ProductCategory.message}</p>}
             </div>
             <div className='mt-4 flex justify-between items-center'>
               <button type='submit' className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda'>

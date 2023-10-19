@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CategorySuppliesCard from '../components/category_supplies.card';
-import { useCategorySupplies } from '../context/category_supplies.context';
-import CreateCategorySuppliesModal from './create_category_supplies';
-import EditCategorySuppliesModal from './edit_category_supplies';
-import DeleteCategorySuppliesModal from './delete_category_supplies';
+import CategorySuppliesCard from '../components/suppliescategory.card';
+import { useCategorySupplies } from '../context/suppliescategory.context';
+import CreateCategorySuppliesModal from './SuppliesCategoryCreatePage';
+import EditCategorySuppliesModal from './SuppliesCategoryUpdatePage';
+import DeleteCategorySuppliesModal from './SuppliesCategoryDeletePage';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { useSupplies } from "../context/supplies.context";
@@ -39,7 +39,7 @@ function ListCategorySupplies() {
       setFilteredCategorySupplies(Category_supplies);
     } else {
       const filtered = Category_supplies.filter(category_supply =>
-        category_supply.Name.toLowerCase().includes(searchTerm.toLowerCase())
+        category_supply.Name_SuppliesCategory.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCategorySupplies(filtered);
     }
@@ -47,7 +47,7 @@ function ListCategorySupplies() {
 
   const handleDelete = async (categorySupply) => {
     const isCategoryInUse = supplies.some(
-      (supply) => supply.Category_Id === categorySupply.Id_Category
+      (supply) => supply.SuppliesCategory_ID === categorySupply.ID_SuppliesCategory
     );
 
     if (isCategoryInUse) {
@@ -65,7 +65,7 @@ function ListCategorySupplies() {
 
   const confirmDelete = () => {
     if (categorySupplyToDelete) {
-      deleteCategory_supplies(categorySupplyToDelete.Id_Category);
+      deleteCategory_supplies(categorySupplyToDelete.ID_SuppliesCategory);
       setCategorySupplyToDelete(null);
       setIsDeleteModalOpen(false);
       setIsDataChanged(true);
@@ -129,7 +129,7 @@ function ListCategorySupplies() {
           {categorySuppliesToDisplay.map(category_supply => (
             <CategorySuppliesCard
               Category_supplies={category_supply}
-              key={category_supply.Id_Category}
+              key={category_supply.ID_SuppliesCategory}
               onEdit={() => handleEdit(category_supply)}
               onDelete={() => handleDelete(category_supply)}
             />

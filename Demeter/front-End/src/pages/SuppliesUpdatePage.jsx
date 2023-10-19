@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSupplies } from '../context/supplies.context';
-import { useCategorySupplies } from '../context/category_supplies.context';
+import { useCategorySupplies } from '../context/suppliescategory.context';
 import Select from 'react-select';
 
 function EditSuppliesModal({ onClose, supplyToEdit }) {
@@ -21,20 +21,20 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
   ];
 
   const categoryOptions = Category_supplies.map(option => ({
-    label: option.Name,
-    value: option.Id_Category
+    label: option.Name_SuppliesCategory,
+    value: option.ID_SuppliesCategory
   }));
 
-  const [selectedCategory, setSelectedCategory] = useState(supplyToEdit.Category_Id);
+  const [selectedCategory, setSelectedCategory] = useState(supplyToEdit.SuppliesCategory_ID);
 
   useEffect(() => {
-    register('Name', {
+    register('Name_Supplies', {
       required: 'Este campo es obligatorio',
       validate: (value) => {
         const duplicateSupply = supplies.find(
           (supply) =>
-            supply.Name === value &&
-            supply.Id_Supplies !== supplyToEdit.Id_Supplies
+            supply.Name_Supplies === value &&
+            supply.ID_Supplies !== supplyToEdit.ID_Supplies
         );
 
         if (duplicateSupply) {
@@ -43,13 +43,13 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
         return true;
       },
     });
-  }, [register, supplies, supplyToEdit.Id_Supplies]);
+  }, [register, supplies, supplyToEdit.ID_Supplies]);
 
   const onSubmit = handleSubmit(async (values) => {
     values.Measure = selectedMeasure;
-    values.Category_Id = selectedCategory;
+    values.SuppliesCategory_ID = selectedCategory;
 
-    updateSupplies(supplyToEdit.Id_Supplies, values);
+    updateSupplies(supplyToEdit.ID_Supplies, values);
     onClose();
   });
 
@@ -82,10 +82,10 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
       <h1 className="text-3xl font-semibold text-center mb-4">Editar insumo</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4">
-          <label htmlFor="Name" className="mb-2 block">Nombre del insumo:</label>
+          <label htmlFor="Name_Supplies" className="mb-2 block">Nombre del insumo:</label>
           <input
             type="text"
-            {...register("Name", {
+            {...register("Name_Supplies", {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -95,7 +95,7 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
             placeholder="Nombre del insumo"
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
-          {errors.Name && <p className="text-red-500">{errors.Name.message}</p>}
+          {errors.Name_Supplies && <p className="text-red-500">{errors.Name_Supplies.message}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="Unit" className="mb-2 block">Cantidad del insumo:</label>
@@ -163,10 +163,10 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
         </div>
 
         <div className="mb-4 inferior">
-          <label htmlFor="Category_Id" className="mb-2 block">Categoría del insumo:</label>
+          <label htmlFor="SuppliesCategory_ID" className="mb-2 block">Categoría del insumo:</label>
           <Select
             options={categoryOptions}
-            {...register("Category_Id", {
+            {...register("SuppliesCategory_ID", {
               required: 'Este campo es obligatorio',
             })}
             value={categoryOptions.find(option => option.value === selectedCategory)}
@@ -183,7 +183,7 @@ function EditSuppliesModal({ onClose, supplyToEdit }) {
               },
             })}
           />
-          {errors.Category_Id && <p className="text-red-500">{errors.Category_Id.message}</p>}
+          {errors.SuppliesCategory_ID && <p className="text-red-500">{errors.SuppliesCategory_ID.message}</p>}
         </div>
 
         <div className="mt-4 flex justify-between items-center">

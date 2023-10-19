@@ -1,5 +1,5 @@
 import React from "react";
-import { useCategoryProducts } from "../context/category_products.context";
+import { useCategoryProducts } from "../context/productcategory.context";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 
@@ -10,7 +10,7 @@ function CategoryProductsCard({ Category_products, onEdit, onDelete }) {
 
   return (
     <tr>
-      <td className="border border-gray-400 px-4 py-2 text-center width-column">{Category_products.Name}</td>
+      <td className="border border-gray-400 px-4 py-2 text-center width-column">{Category_products.Name_ProductCategory}</td>
       <td className={`border border-gray-400 px-4 py-2 text-center width-column ${barraClass}`}>
         {Category_products.State ? "Habilitado" : "Deshabilitado"}
       </td>
@@ -35,7 +35,7 @@ function CategoryProductsCard({ Category_products, onEdit, onDelete }) {
           <div
             className={`barra-container ${barraClass} adjust`}
             style={{ marginRight: "-100px" }}
-            onClick={() => toggleCategoryProductStatus(Category_products.Id_Category)}
+            onClick={() => toggleCategoryProductStatus(Category_products.ID_ProductCategory)}
           >
             <div className={`circulo ${barraClass}`} >
               {Category_products.State ? (

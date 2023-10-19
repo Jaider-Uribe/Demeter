@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { useCategorySupplies } from '../context/category_supplies.context.jsx';
+import { useCategorySupplies } from '../context/suppliescategory.context.jsx';
 
 function CreateCategorySuppliesModal({ onClose }) {
   const { register, handleSubmit, formState: { errors }, setError } = useForm();
   const { createCategory_supplies, Category_supplies } = useCategorySupplies();
 
   const onSubmit = handleSubmit(async (values) => {
-    const isNameDuplicate = Category_supplies.some(category => category.Name === values.Name);
+    const isNameDuplicate = Category_supplies.some(category => category.Name_SuppliesCategory === values.Name_SuppliesCategory);
 
     if (isNameDuplicate) {
-      setError('Name', {
+      setError('Name_SuppliesCategory', {
         type: 'manual',
         message: 'El nombre de la categoría ya existe.'
       });
@@ -30,10 +30,10 @@ function CreateCategorySuppliesModal({ onClose }) {
       <form onSubmit={onSubmit}>
         <div className='contenedor'>
           <div className="mb-4 inferior">
-            <label htmlFor="Name" className="mb-2 block">Nombre de la categoría:</label>
+            <label htmlFor="Name_SuppliesCategory" className="mb-2 block">Nombre de la categoría:</label>
             <input
               type="text"
-              {...register("Name", {
+              {...register("Name_SuppliesCategory", {
                 required: 'Este campo es obligatorio',
                 pattern: {
                   value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -43,7 +43,7 @@ function CreateCategorySuppliesModal({ onClose }) {
               placeholder="Nombre de la categoría"
               className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
             />
-            {errors.Name && <p className="text-red-500">{errors.Name.message}</p>}
+            {errors.Name_SuppliesCategory && <p className="text-red-500">{errors.Name_SuppliesCategory.message}</p>}
           </div>
         </div>
         <div className="mt-4 flex justify-between items-center">

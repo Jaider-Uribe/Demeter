@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useCategorySupplies } from "../context/category_supplies.context";
+import { useCategorySupplies } from "../context/suppliescategory.context";
 import { useSupplies } from "../context/supplies.context";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
-import ChangeCategoryStatusModal from "./category_supplies.modal"; 
+import ChangeCategoryStatusModal from "./suppliescategory.modal"; 
 
 function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
   const { toggleCategorySupplyStatus } = useCategorySupplies();
@@ -13,12 +13,12 @@ function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
   const barraClass = Category_supplies.State ? "" : "desactivado";
 
   const canChangeCategoryStatus = !supplies.some(
-    (supply) => supply.Category_Id === Category_supplies.Id_Category
+    (supply) => supply.SuppliesCategory_ID === Category_supplies.ID_SuppliesCategory
   );
 
   const handleToggleCategoryStatus = () => {
     if (canChangeCategoryStatus) {
-      toggleCategorySupplyStatus(Category_supplies.Id_Category);
+      toggleCategorySupplyStatus(Category_supplies.ID_SuppliesCategory);
     } else {
       setIsModalOpen(true);
     }
@@ -27,7 +27,7 @@ function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
   return (
     <tr>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">
-        {Category_supplies.Name}
+        {Category_supplies.Name_SuppliesCategory}
       </td>
       <td
         className={`border border-gray-400 px-4 py-2 text-center width-column ${barraClass}`}

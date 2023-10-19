@@ -1,6 +1,6 @@
 import express from 'express';
-import category_suppliesRoutes from './routes/category_supplies.routes.js';
-import category_productsRoutes from './routes/category_products.routes.js'
+import category_suppliesRoutes from './routes/suppliescategory.routes.js';
+import category_productsRoutes from './routes/productcategory.routes.js'
 import suppliesRoutes from '../src/routes/supplies.routes.js';
 import cors from 'cors';
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSupplies } from '../context/supplies.context';
 import SuppliesCard from '../components/supplies.card';
-import CreateSuppliesModal from './create_supplies';
-import EditSuppliesModal from './edit_supplies';
-import DeleteSuppliesModal from './delete_supplies';
+import CreateSuppliesModal from './SuppliesCreatePage';
+import EditSuppliesModal from './SuppliesUpdatePage';
+import DeleteSuppliesModal from './SuppliesDeletePage';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import logo from '../img/logo.png';
-import { useCategorySupplies } from "../context/category_supplies.context";
+import { useCategorySupplies } from "../context/suppliescategory.context";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -36,7 +36,7 @@ function ListSupplies() {
       setFilteredSupplies(supplies);
     } else {
       const filtered = supplies.filter((supply) =>
-        supply.Name.toLowerCase().includes(searchTerm.toLowerCase())
+        supply.Name_Supplies.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredSupplies(filtered);
     }
@@ -62,7 +62,7 @@ function ListSupplies() {
 
   const confirmDelete = () => {
     if (supplyToDelete) {
-      deleteSupplies(supplyToDelete.Id_Supplies);
+      deleteSupplies(supplyToDelete.ID_Supplies);
       setSupplyToDelete(null);
       setIsDeleteModalOpen(false);
     }
@@ -94,12 +94,12 @@ function ListSupplies() {
             body: [
               ['Nombre', 'Peso', 'Medida', 'Stock Mínimo', 'Categoría', 'Estado'],
               ...filteredSupplies.map((supply) => [
-                supply.Name,
+                supply.Name_Supplies,
                 supply.Unit || '',
                 supply.Measure,
                 supply.Stock || '',
                 supply.Category_Id ? (
-                  Category_supplies.find((category) => category.Id_Category === supply.Category_Id)?.Name || ''
+                  Category_supplies.find((category) => category.ID_SuppliesCategory === supply.SuppliesCategory_ID)?.Name_SuppliesCategory || ''
                 ) : '',
                 supply.State ? 'Habilitado' : 'Deshabilitado',
               ]),
@@ -164,7 +164,7 @@ function ListSupplies() {
           {suppliesToDisplay.map((supply) => (
             <SuppliesCard
               supplies={supply}
-              key={supply.Id_Supplies}
+              key={supply.ID_Supplies}
               onEdit={() => handleEdit(supply)}
               onDelete={() => handleDelete(supply)}
             />

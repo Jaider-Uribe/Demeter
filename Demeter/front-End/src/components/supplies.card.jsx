@@ -1,5 +1,5 @@
 import { useSupplies } from "../context/supplies.context";
-import { useCategorySupplies } from "../context/category_supplies.context";
+import { useCategorySupplies } from "../context/suppliescategory.context";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 
@@ -8,19 +8,19 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
   const { Category_supplies } = useCategorySupplies();
 
   const category = Category_supplies.find(
-    (category) => category.Id_Category === supplies.Category_Id
+    (category) => category.ID_SuppliesCategory === supplies.SuppliesCategory_ID
   );
 
   const barraClass = supplies.State ? "" : "desactivado";
 
   return (
     <tr>
-      <td className="border border-gray-400 px-4 py-2 text-center width-column">{supplies.Name}</td>
+      <td className="border border-gray-400 px-4 py-2 text-center width-column">{supplies.Name_Supplies}</td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">{supplies.Unit}</td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">{supplies.Measure}</td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">{supplies.Stock}</td>
       <td className="border border-gray-400 px-4 py-2 text-center width-column">
-        {category && category.Name}
+        {category && category.Name_SuppliesCategory}
       </td>
       <td className={`border border-gray-400 px-4 py-2 text-center width-column ${barraClass}`}>
         {supplies.State ? "Habilitado" : "Deshabilitado"}
@@ -44,7 +44,7 @@ function SuppliesCard({ supplies, onEdit, onDelete }) {
           </button>
           <div
             className={`barra-container ${barraClass} adjust`}
-            onClick={() => toggleSupplyStatus(supplies.Id_Supplies)}
+            onClick={() => toggleSupplyStatus(supplies.ID_Supplies)}
           >
             <div className={` ${barraClass}`} style={{ marginRight: "-30px" }}>
               {supplies.State ? (

@@ -1,12 +1,12 @@
 import app from './app.js';
 import { sequelize } from './db/database.js';
-import './models/category_supplies.model.js'
+import './models/suppliescategory.model.js'
 import './models/supplies.model.js';
-import './models/category_products.model.js';
+import './models/productcategory.model.js';
 
 async function main(){
     try{
-        await sequelize.sync({force : false});
+        await sequelize.sync({force : true});
         console.log("conectado con exito");
         app.listen(4000)
         console.log('server on port', 4000)

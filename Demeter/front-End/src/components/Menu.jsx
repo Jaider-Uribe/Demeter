@@ -42,7 +42,7 @@ const Menu = () => {
                 <li>
                   <button
                     onClick={() => {
-                      navigate('/list_category_supplies');
+                      navigate('/SuppliesCategoryListPage');
                     }}
                     className="text-white bg-[#201E1E] rounded-md p-2 w-full"
                   >
@@ -52,7 +52,7 @@ const Menu = () => {
                 <li>
                   <button
                     onClick={() => {
-                      navigate('/list_supplies');
+                      navigate('/SuppliesListPage');
                     }}
                     className="text-white bg-[#201E1E] rounded-md p-2 w-full"
                   >
@@ -83,7 +83,7 @@ const Menu = () => {
                 <li>
                   <button
                     onClick={() => {
-                      navigate('/list_category_products');
+                      navigate('/ProductCategoryListPage');
                     }}
                     className="text-white bg-[#201E1E] rounded-md p-2 w-full"
                   >

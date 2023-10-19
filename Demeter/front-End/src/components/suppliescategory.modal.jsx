@@ -1,5 +1,3 @@
-// ChangeCategoryStatusModal.js
-
 import React from "react";
 
 function ChangeCategoryStatusModal({ isOpen, onClose }) {

@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import ListCategorySupplies from './pages/list_category_supplies';
-import CreateCategorySupplies from './pages/create_category_supplies';
-import { CategorySupplies } from './context/category_supplies.context';
-import ListSupplies from './pages/list_supplies';
-import CreateSupplies from './pages/create_supplies';
+import ListCategorySupplies from './pages/SuppliesCategoryListPage';
+import CreateCategorySupplies from './pages/SuppliesCategoryCreatePage';
+import { CategorySupplies } from './context/suppliescategory.context';
+import ListSupplies from './pages/SuppliesListPage';
+import CreateSupplies from './pages/SuppliesCreatePage';
 import { Supplies } from './context/supplies.context'
-import ListCategoryProducts from './pages/list_category_products';
-import CreateCategoryProducts from './pages/create_category_products';
-import { CategoryProducts } from './context/category_products.context';
+import ListCategoryProducts from './pages/ProductCategoryListPage';
+import CreateCategoryProducts from './pages/ProductCategoryCreatePage';
+import { CategoryProducts } from './context/productcategory.context';
 
 function App() {
   return (
@@ -21,15 +21,15 @@ function App() {
               <main className='container mx-auto px-10 flex-grow'>
                 <Routes>
                   <Route path='/' element={<h1>Home</h1>} />
-                  <Route path='/list_category_supplies' element={<ListCategorySupplies />} />
-                  <Route path='/create_category_supplies' element={<CreateCategorySupplies />} />
-                  <Route path='/create_category_supplies/:id' element={<CreateCategorySupplies />} />
-                  <Route path='/list_supplies' element={<ListSupplies />} />
-                  <Route path='/create_supplies' element={<CreateSupplies />} />
-                  <Route path='/create_supplies/:id' element={<CreateSupplies />} />
-                  <Route path='/list_category_products' element={<ListCategoryProducts />} />
-                  <Route path='/create_category_products' element={<CreateCategoryProducts />} />
-                  <Route path='/create_category_products/:id' element={<CreateCategoryProducts />} />
+                  <Route path='/SuppliesCategoryListPage' element={<ListCategorySupplies />} />
+                  <Route path='/SuppliesCategoryCreatePage' element={<CreateCategorySupplies />} />
+                  <Route path='/SuppliesCategoryCreatePage/:id' element={<CreateCategorySupplies />} />
+                  <Route path='/SuppliesListPage' element={<ListSupplies />} />
+                  <Route path='/SuppliesCreatePage' element={<CreateSupplies />} />
+                  <Route path='/SuppliesCreatePage/:id' element={<CreateSupplies />} />
+                  <Route path='/ProductCategoryListPage' element={<ListCategoryProducts />} />
+                  <Route path='/ProductCategoryCreatePage' element={<CreateCategoryProducts />} />
+                  <Route path='/ProductCategoryCreatePage/:id' element={<CreateCategoryProducts />} />
                 </Routes>
               </main>
             </div>

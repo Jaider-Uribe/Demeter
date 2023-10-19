@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useCategoryProducts } from '../context/category_products.context';
-import CategoryProductsCard from '../components/category_products.card';
-import CreateCategoryProductsModal from './create_category_products';
-import EditCategoryProductsModal from './edit_category_products';
-import DeleteCategoryProductsModal from './delete_category_products';
+import { useCategoryProducts } from '../context/productcategory.context';
+import CategoryProductsCard from '../components/productcategory.card';
+import CreateCategoryProductsModal from './ProductCategoryCreatePage';
+import EditCategoryProductsModal from './ProductCategoryUpdatePage';
+import DeleteCategoryProductsModal from './ProductCategoryDeletePage';
 
 function ListCategoryProducts() {
   const { Category_products, getCategory_products, deleteCategory_products } = useCategoryProducts();
@@ -29,7 +29,7 @@ function ListCategoryProducts() {
       setFilteredCategoryProducts(Category_products);
     } else {
       const filtered = Category_products.filter(category_product =>
-        category_product.Name.toLowerCase().includes(searchTerm.toLowerCase())
+        category_product.Name_ProductCategory.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCategoryProducts(filtered);
     }
@@ -51,7 +51,7 @@ function ListCategoryProducts() {
 
   const confirmDelete = () => {
     if (categoryProductToDelete) {
-      deleteCategory_products(categoryProductToDelete.Id_Category);
+      deleteCategory_products(categoryProductToDelete.ID_ProductCategory);
       setCategoryProductToDelete(null);
       setIsDeleteModalOpen(false);
       setIsDataChanged(true);
@@ -105,7 +105,7 @@ function ListCategoryProducts() {
           {categoryProductsToDisplay.map(categoryProduct => (
             <CategoryProductsCard
               Category_products={categoryProduct}
-              key={categoryProduct.Id_Category}
+              key={categoryProduct.ID_ProductCategory}
               onEdit={() => handleEdit(categoryProduct)}
               onDelete={() => handleDelete(categoryProduct)}
             />

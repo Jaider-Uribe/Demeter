@@ -1,9 +1,9 @@
-import { category_products } from "../models/category_products.model.js";
-// import { products } from "../models/products.model.js";
+import { productCategory } from "../models/productcategory.model.js";
+// import { product } from "../models/product.model.js";
 
 export const getCategory_products = async (req, res) => {
     try {
-        const arrayCategory_products = await category_products.findAll()
+        const arrayCategory_products = await productCategory.findAll()
         res.json(arrayCategory_products);
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -13,9 +13,9 @@ export const getCategory_products = async (req, res) => {
 export const getOneCategory_products = async (req, res) => {
     try {
         const { id } = req.params;
-        const oneCategory_products = await category_products.findOne({
+        const oneCategory_products = await productCategory.findOne({
             where: {
-                Id_Category: id
+                ID_ProductCategory: id
             }
         });
 
@@ -29,10 +29,10 @@ export const getOneCategory_products = async (req, res) => {
 export const createCategory_products = async (req, res) => {
     
     try {
-        const { Name } = req.body
+        const { Name_ProductCategory } = req.body
 
-        const newCategory_products = new category_products({
-            Name,
+        const newCategory_products = new productCategory({
+            Name_ProductCategory,
             State: true,
         })
         
@@ -48,9 +48,9 @@ export const disableCategory_products = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const categoryProducts = await category_products.findOne({
+        const categoryProducts = await productCategory.findOne({
             where: {
-                Id_Category: id
+                ID_ProductCategory: id
             }
         });
 
@@ -70,10 +70,10 @@ export const updateCategory_products = async (req, res) => {
 
     try {
         const { id } = req.params;
-        const { Name } = req.body
+        const { Name_ProductCategory } = req.body
 
-        const updateCategory_products = await category_products.findByPk(id)
-        updateCategory_products.Name = Name;
+        const updateCategory_products = await productCategory.findByPk(id)
+        updateCategory_products.Name_ProductCategory = Name_ProductCategory;
 
         await updateCategory_products.save();
         res.json(updateCategory_products);
@@ -86,9 +86,9 @@ export const deleteCategory_products = async (req, res) => {
     try {
         const { id } = req.params;
 
-        await category_products.destroy({
+        await productCategory.destroy({
             where: {
-                Id_Category: id,
+                ID_ProductCategory: id,
             },
         });
 

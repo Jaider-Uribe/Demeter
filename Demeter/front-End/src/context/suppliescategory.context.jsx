@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, disableCategory_suppliesRequest, updateCategory_suppliesRequest, deleteCategory_suppliesRequest } from "../api/category_supplies.request";
+import { getCategory_suppliesRequest, getOne_Category_suppliesRequest, createCategory_suppliesRequest, disableCategory_suppliesRequest, updateCategory_suppliesRequest, deleteCategory_suppliesRequest } from "../api/suppliescategory.request";
 
 const CategorySuppliesContext = createContext();
 
@@ -67,7 +67,7 @@ export function CategorySupplies({ children }) {
             if (res.status === 200) {
                 setCategory_supplies((prevcategorySupplies) =>
                     prevcategorySupplies.map((category) =>
-                        category.Id_Category === id ? { ...category, State: !category.State } : category
+                        category.ID_SuppliesCategory === id ? { ...category, State: !category.State } : category
                     )
                 );
             }
@@ -88,7 +88,7 @@ export function CategorySupplies({ children }) {
     const deleteCategory_supplies = async (id) => {
         try {
             const res = await deleteCategory_suppliesRequest(id)
-            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.Id_Category !== id))
+            if (res.status === 204) setCategory_supplies(Category_supplies.filter(category => category.ID_SuppliesCategory !== id))
         } catch (error) {
             console.log(error);
         }

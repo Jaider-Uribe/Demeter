@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { useForm } from 'react-hook-form';
 import { useSupplies } from '../context/supplies.context';
-import { useCategorySupplies } from '../context/category_supplies.context';
+import { useCategorySupplies } from '../context/suppliescategory.context';
 
 function CreateSuppliesModal({ onClose, onCreated }) {
   const { register, handleSubmit, formState: { errors }, setError } = useForm();
@@ -21,7 +21,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
 
   ];
 
-  const categoryOptions = Category_supplies.map(option => ({ label: option.Name, value: option.Id_Category }));
+  const categoryOptions = Category_supplies.map(option => ({ label: option.Name_SuppliesCategory, value: option.ID_SuppliesCategory }));
 
   const customStyles = {
     control: (provided, state) => ({
@@ -44,10 +44,10 @@ function CreateSuppliesModal({ onClose, onCreated }) {
   };
 
   const onSubmit = handleSubmit(async (values) => {
-    const isNameDuplicate = supplies.some(supply => supply.Name === values.Name);
+    const isNameDuplicate = supplies.some(supply => supply.Name_Supplies === values.Name_Supplies);
 
     if (isNameDuplicate) {
-      setError('Name', {
+      setError('Name_Supplies', {
         type: 'manual',
         message: 'El nombre del insumo ya existe.'
       });
@@ -63,7 +63,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
     }
 
     if (!selectedCategory || selectedCategory.value === '') {
-      setError('Category_Id', {
+      setError('SuppliesCategory_ID', {
         type: 'manual',
         message: 'Debes seleccionar una categoría.'
       });
@@ -71,7 +71,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
     }
 
     values.Measure = selectedMeasure.value;
-    values.Category_Id = selectedCategory.value;
+    values.SuppliesCategory_ID = selectedCategory.value;
 
     createSupplies(values);
     onCreated();
@@ -87,10 +87,10 @@ function CreateSuppliesModal({ onClose, onCreated }) {
       <h1 className="text-3xl font-semibold text-center mb-4">Crear insumo</h1>
       <form onSubmit={onSubmit}>
         <div className="mb-4">
-          <label htmlFor="Name" className="mb-2 block">Nombre del insumo:</label>
+          <label htmlFor="Name_Supplies" className="mb-2 block">Nombre del insumo:</label>
           <input
             type="text"
-            {...register("Name", {
+            {...register("Name_Supplies", {
               required: 'Este campo es obligatorio',
               pattern: {
                 value: /^[A-ZÁÉÍÓÚ][a-záéíóú\s]*[a-záéíóú]$/,
@@ -100,7 +100,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
             placeholder="Nombre del insumo"
             className='w-full bg-white text-[#201E1E] border-[#201E1E] border rounded-md py-2 px-4'
           />
-          {errors.Name && <p className="text-red-500">{errors.Name.message}</p>}
+          {errors.Name_Supplies && <p className="text-red-500">{errors.Name_Supplies.message}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="Unit" className="mb-2 block">Cantidad del insumo:</label>
@@ -169,13 +169,13 @@ function CreateSuppliesModal({ onClose, onCreated }) {
           {errors.Stock && <p className="text-red-500">{errors.Stock.message}</p>}
         </div>
         <div className="mb-4 inferior">
-          <label htmlFor="Category_Id" className="mb-2 block">Categoría del insumo:</label>
+          <label htmlFor="SuppliesCategory_ID" className="mb-2 block">Categoría del insumo:</label>
           <Select
             options={[
               { label: 'Seleccionar categoría', value: '', isDisabled: true }, 
               ...categoryOptions
             ]}
-            {...register("Category_Id")}
+            {...register("SuppliesCategory_ID")}
             value={selectedCategory}
             onChange={(selectedOption) => setSelectedCategory(selectedOption)}
             menuPlacement="auto"
@@ -190,7 +190,7 @@ function CreateSuppliesModal({ onClose, onCreated }) {
               },
             })}
           />
-          {errors.Category_Id && <p className="text-red-500">{errors.Category_Id.message}</p>}
+          {errors.SuppliesCategory_ID && <p className="text-red-500">{errors.SuppliesCategory_ID.message}</p>}
         </div>
         <div className="mt-4 flex justify-between items-center">
           <button type="submit" className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded boton-izquierda'>
