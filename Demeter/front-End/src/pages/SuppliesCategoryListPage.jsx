@@ -101,7 +101,7 @@ function ListCategorySupplies() {
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={navigateToCreateCategorySupplies}
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
+          className="bg-orange-500 hover-bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover-border-orange-700 focus-outline-none focus-shadow-outline"
         >
           Crear categoría
         </button>
@@ -114,28 +114,38 @@ function ListCategorySupplies() {
             const filteredInput = inputValue.replace(/[^a-zA-Z]/g, '');
             setSearchTerm(filteredInput);
           }}
-          className="border-2 border-gray-800 rounded-lg p-2 focus:outline-none"
+          className="border-2 border-gray-800 rounded-lg p-2 focus-outline-none"
         />
       </div>
-      <table className="table-auto mx-auto w-full">
+      <table className="table-custom mx-auto w-full border-separate">
         <thead>
-          <tr className="bg-[#201E1E] text-white">
-            <th className="border border-gray-400 px-4 py-2">Nombre</th>
-            <th className="border border-gray-400 px-4 py-2">Estado</th>
-            <th className="border border-gray-400 px-4 py-2">Acciones</th>
+          <tr className="bg-[#c0c0c0] text-black">
+            <th className="border border-gray-400 px-4 py-4 w-1/4 text-left">#</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/4 text-center">Nombre</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/4 text-center">Estado</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/4 text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {categorySuppliesToDisplay.map(category_supply => (
+          {categorySuppliesToDisplay.map((category_supply, count) => (
             <CategorySuppliesCard
-              Category_supplies={category_supply}
+              categorySupply={category_supply}
               key={category_supply.ID_SuppliesCategory}
+              count={startIndex + count + 1}
               onEdit={() => handleEdit(category_supply)}
               onDelete={() => handleDelete(category_supply)}
             />
           ))}
         </tbody>
       </table>
+
+      {isDeleteModalOpen && (
+        <DeleteCategorySuppliesModal
+          onClose={cancelDelete}
+          cannotDelete={cannotDelete}
+          onConfirmDelete={confirmDelete}
+        />
+      )}
 
       {isDeleteModalOpen && (
         <DeleteCategorySuppliesModal

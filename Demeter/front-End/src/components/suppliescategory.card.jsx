@@ -5,73 +5,63 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 import ChangeCategoryStatusModal from "./suppliescategory.modal"; 
 
-function CategorySuppliesCard({ Category_supplies, onEdit, onDelete }) {
+function CategorySuppliesCard({ categorySupply, onEdit, onDelete, count }) {
   const { toggleCategorySupplyStatus } = useCategorySupplies();
   const { supplies } = useSupplies();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const barraClass = Category_supplies.State ? "" : "desactivado";
+  const barraClass = categorySupply.State ? "" : "desactivado";
 
   const canChangeCategoryStatus = !supplies.some(
-    (supply) => supply.SuppliesCategory_ID === Category_supplies.ID_SuppliesCategory
+    (supply) => supply.SuppliesCategory_ID === categorySupply.ID_SuppliesCategory
   );
 
   const handleToggleCategoryStatus = () => {
     if (canChangeCategoryStatus) {
-      toggleCategorySupplyStatus(Category_supplies.ID_SuppliesCategory);
+      toggleCategorySupplyStatus(categorySupply.ID_SuppliesCategory);
     } else {
       setIsModalOpen(true);
     }
   };
 
   return (
-    <tr>
-      <td className="border border-gray-400 px-4 py-2 text-center width-column">
-        {Category_supplies.Name_SuppliesCategory}
+    <tr className="text-black">
+      <td className="px-4 py-1 w-1/4 text-left">{count}</td>
+      <td className="px-4 py-1 w-1/4 text-center">
+        {categorySupply.Name_SuppliesCategory}
       </td>
-      <td
-        className={`border border-gray-400 px-4 py-2 text-center width-column ${barraClass}`}
-      >
-        {Category_supplies.State ? "Habilitado" : "Deshabilitado"}
+      <td className={`px-4 py-1 w-1/4 text-center ${barraClass}`}>
+        {categorySupply.State ? "Habilitado" : "Deshabilitado"}
       </td>
-      <td className="border border-gray-400 px-4 py-2 text-center">
-        <div style={{ display: "flex", marginLeft: "19%" }}>
+      <td className="px-4 py-1 w-1/4">
+        <div className="flex justify-center items-center space-x-2">
           <button
             onClick={onEdit}
-            className={`text-orange-500 hover:text-orange-700 mr-2 ${
-              !Category_supplies.State
-                ? "text-gray-400 cursor-not-allowed"
-                : ""
+            className={`text-orange-500 hover:text-orange-700 ${
+              !categorySupply.State ? "text-gray-400 cursor-not-allowed" : ""
             }`}
-          disabled={!Category_supplies.State} 
-            style={{ marginLeft: "24%" }}
+            disabled={!categorySupply.State}
           >
             <AiFillEdit size={24} />
           </button>
           <button
             onClick={onDelete}
-            className={`text-red-500 hover:text-red-800 mr-2 ${
-              !Category_supplies.State
-                ? "text-gray-400 cursor-not-allowed"
-                : ""
+            className={`text-red-500 hover:text-red-800 ${
+              !categorySupply.State ? "text-gray-400 cursor-not-allowed" : ""
             }`}
-            style={{ marginRight: "-25px" }}
-            disabled={!Category_supplies.State }
+            disabled={!categorySupply.State}
           >
             <AiFillDelete size={24} />
           </button>
           <div
-            className={`barra-container ${barraClass} adjust`}
-            style={{ marginRight: "-100px" }}
+            className={`barra-container ${barraClass}`}
             onClick={handleToggleCategoryStatus}
           >
-            <div className={`circulo ${barraClass}`}>
-              {Category_supplies.State ? (
-                <MdToggleOn className={`estado-icon active ${barraClass}`} />
-              ) : (
-                <MdToggleOff className={`estado-icon inactive ${barraClass}`} />
-              )}
-            </div>
+            {categorySupply.State ? (
+              <MdToggleOn className="estado-icon active" />
+            ) : (
+              <MdToggleOff className="estado-icon inactive" />
+            )}
           </div>
         </div>
       </td>

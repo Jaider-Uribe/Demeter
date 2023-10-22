@@ -132,7 +132,7 @@ function ListSupplies() {
         <button
           onClick={generatePDF}
           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '64%' }}
+          style={{ marginLeft: '45%' }}
         >
           Generar PDF
         </button>
@@ -148,23 +148,25 @@ function ListSupplies() {
           className="border-2 border-gray-800 rounded-lg p-2 focus:outline-none"
         />
       </div>
-      <table className="table-auto mx-auto w-full">
+      <table className="table-custom mx-auto w-full border-separate">
         <thead>
-          <tr className="bg-[#201E1E] text-white">
-            <th className="border border-gray-400 px-4 py-2 w-1/7">Nombre</th>
-            <th className="border border-gray-400 px-4 py-2 w-1/7">Peso</th>
-            <th className="border border-gray-400 px-7 py-2 w-1/7">Medida</th>
-            <th className="border border-gray-400 px-4 py-2 w-1/7">Stock Mínimo</th>
-            <th className="border border-gray-400 px-2 py-2 w-1/7">Categoría asociada</th>
-            <th className="border border-gray-400 px-8 py-2 w-1/7">Estado</th>
-            <th className="border border-gray-400 px-4 py-2 w-1/7">Acciones</th>
+          <tr className="bg-[#c0c0c0] text-black">
+            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">#</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Nombre</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Peso</th>
+            <th className="border border-gray-400 px-7 py-4 w-1/8 text-center">Medida</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Stock Mínimo</th>
+            <th className="border border-gray-400 px-2 py-4 w-1/8 text-center">Categoría asociada</th>
+            <th className="border border-gray-400 px-8 py-4 w-1/8 text-center">Estado</th>
+            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {suppliesToDisplay.map((supply) => (
+          {suppliesToDisplay.map((supply, count) => (
             <SuppliesCard
               supplies={supply}
               key={supply.ID_Supplies}
+              count={startIndex + count + 1}
               onEdit={() => handleEdit(supply)}
               onDelete={() => handleDelete(supply)}
             />

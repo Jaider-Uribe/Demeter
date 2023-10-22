@@ -3,47 +3,49 @@ import { useCategoryProducts } from "../context/productcategory.context";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
 
-function CategoryProductsCard({ Category_products, onEdit, onDelete }) {
+function CategoryProductsCard({ categoryProduct, onEdit, onDelete, count }) {
   const { toggleCategoryProductStatus } = useCategoryProducts();
 
-  const barraClass = Category_products.State ? "" : "desactivado";
+  const barraClass = categoryProduct.State ? "" : "desactivado";
 
   return (
     <tr>
-      <td className="border border-gray-400 px-4 py-2 text-center width-column">{Category_products.Name_ProductCategory}</td>
-      <td className={`border border-gray-400 px-4 py-2 text-center width-column ${barraClass}`}>
-        {Category_products.State ? "Habilitado" : "Deshabilitado"}
+      <td className="border border-gray-400 px-4 py-1 w-1/4 text-left">{count}</td>
+      <td className="border border-gray-400 px-4 py-1 w-1/4 text-center">
+        {categoryProduct.Name_ProductCategory}
       </td>
-      <td className="border border-gray-400 px-4 py-2 text-center">
-        <div style={{ display: "flex", marginLeft: "19%" }}>
+      <td className={`border border-gray-400 px-4 py-1 w-1/4 text-center ${barraClass}`}>
+        {categoryProduct.State ? "Habilitado" : "Deshabilitado"}
+      </td>
+      <td className="border border-gray-400 px-4 py-1 w-1/4">
+        <div className="flex justify-center items-center space-x-2">
           <button
             onClick={onEdit}
-            className={`text-orange-500 hover:text-orange-700 mr-2 ${!Category_products.State ? "text-gray-400 cursor-not-allowed" : ""}`}
-            disabled={!Category_products.State}
-            style={{ marginLeft: "24%" }}
+            className={`text-orange-500 hover:text-orange-700 ${
+              !categoryProduct.State ? "text-gray-400 cursor-not-allowed" : ""
+            }`}
+            disabled={!categoryProduct.State}
           >
             <AiFillEdit size={24} />
           </button>
           <button
             onClick={onDelete}
-            className={`text-red-500 hover:text-red-800 mr-2 ${!Category_products.State ? "text-gray-400 cursor-not-allowed" : ""}`}
-            style={{ marginRight: "-25px" }}
-            disabled={!Category_products.State}
+            className={`text-red-500 hover:text-red-800 ${
+              !categoryProduct.State ? "text-gray-400 cursor-not-allowed" : ""
+            }`}
+            disabled={!categoryProduct.State}
           >
             <AiFillDelete size={24} />
           </button>
           <div
-            className={`barra-container ${barraClass} adjust`}
-            style={{ marginRight: "-100px" }}
-            onClick={() => toggleCategoryProductStatus(Category_products.ID_ProductCategory)}
+            className={`barra-container ${barraClass}`}
+            onClick={() => toggleCategoryProductStatus(categoryProduct.ID_ProductCategory)}
           >
-            <div className={`circulo ${barraClass}`} >
-              {Category_products.State ? (
-                <MdToggleOn className={`estado-icon active ${barraClass}`} />
-              ) : (
-                <MdToggleOff className={`estado-icon inactive ${barraClass}`} />
-              )}
-            </div>
+            {categoryProduct.State ? (
+              <MdToggleOn className={`estado-icon active ${barraClass}`} />
+            ) : (
+              <MdToggleOff className={`estado-icon inactive ${barraClass}`} />
+            )}
           </div>
         </div>
       </td>

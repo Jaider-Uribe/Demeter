@@ -5,8 +5,8 @@ function DeleteSuppliesModal({ onClose, onDelete }) {
         <div className="fixed inset-0 flex items-center justify-center">
             <div className="modal-overlay" onClick={onClose}></div>
             <div className="modal-container bg-white p-6 rounded shadow-md text-center">
-                <h1 className="text-3xl font-semibold ">Confirmar eliminación</h1> 
-                <p className="deleteText">¿Estás seguro de que deseas eliminar este insumo?</p> 
+                <h1 className="text-3xl font-semibold ">Confirmar eliminación</h1>
+                <p className="deleteText">¿Estás seguro de que deseas eliminar este insumo?</p>
                 <div className="flex justify-between">
                     <button
                         onClick={onDelete}

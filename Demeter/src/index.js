@@ -6,7 +6,7 @@ import './models/productcategory.model.js';
 
 async function main(){
     try{
-        await sequelize.sync({force : true});
+        await sequelize.sync({force : false});
         console.log("conectado con exito");
         app.listen(4000)
         console.log('server on port', 4000)
