@@ -49,7 +49,7 @@ function SuppliesCard({ supplies, onEdit, onDelete, count }) {
             <AiFillDelete size={24} />
           </button>
           <div
-            className={`barra-container ${!supplies.State ? 'desactivado' : ''}`}
+            className={`${!supplies.State ? 'desactivado' : ''}`}
             onClick={() => toggleSupplyStatus(supplies.ID_Supplies)}
           >
             {supplies.State ? (

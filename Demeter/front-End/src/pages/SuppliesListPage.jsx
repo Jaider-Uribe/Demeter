@@ -98,7 +98,7 @@ function ListSupplies() {
                 supply.Unit || '',
                 supply.Measure,
                 supply.Stock || '',
-                supply.Category_Id ? (
+                supply.SuppliesCategory_ID ? (
                   Category_supplies.find((category) => category.ID_SuppliesCategory === supply.SuppliesCategory_ID)?.Name_SuppliesCategory || ''
                 ) : '',
                 supply.State ? 'Habilitado' : 'Deshabilitado',
@@ -121,104 +121,105 @@ function ListSupplies() {
 
   return (
     <div className="mx-auto mt-4 contenedor">
-      <h1 className="text-3xl font-bold text-center mb-20">Insumos</h1>
-      <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={navigateToCreateSupplies}
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-        >
-          Crear insumo
-        </button>
-        <button
-          onClick={generatePDF}
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
-          style={{ marginLeft: '45%' }}
-        >
-          Generar PDF
-        </button>
-        <input
-          type="text"
-          placeholder="Buscar insumo por nombre"
-          value={searchTerm}
-          onChange={(e) => {
-            const inputValue = e.target.value;
-            const filteredInput = inputValue.replace(/[^a-zA-Z]/g, '');
-            setSearchTerm(filteredInput);
-          }}
-          className="border-2 border-gray-800 rounded-lg p-2 focus:outline-none"
-        />
-      </div>
-      <table className="table-custom mx-auto w-full border-separate">
-        <thead>
-          <tr className="bg-[#c0c0c0] text-black">
-            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">#</th>
-            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Nombre</th>
-            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Peso</th>
-            <th className="border border-gray-400 px-7 py-4 w-1/8 text-center">Medida</th>
-            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Stock Mínimo</th>
-            <th className="border border-gray-400 px-2 py-4 w-1/8 text-center">Categoría asociada</th>
-            <th className="border border-gray-400 px-8 py-4 w-1/8 text-center">Estado</th>
-            <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {suppliesToDisplay.map((supply, count) => (
-            <SuppliesCard
-              supplies={supply}
-              key={supply.ID_Supplies}
-              count={startIndex + count + 1}
-              onEdit={() => handleEdit(supply)}
-              onDelete={() => handleDelete(supply)}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="page-container">
+        <h1 className="text-3xl font-bold text-center mb-20">Insumos</h1>
+        <div className="flex justify-between items-center mb-4">
+          <button
+            onClick={navigateToCreateSupplies}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
+          >
+            Crear insumo
+          </button>
+          <button
+            onClick={generatePDF}
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline"
+            style={{ marginLeft: '45%' }}
+          >
+            Generar PDF
+          </button>
+          <input
+            type="text"
+            placeholder="Buscar insumo por nombre"
+            value={searchTerm}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const filteredInput = inputValue.replace(/[^a-zA-Z]/g, '');
+              setSearchTerm(filteredInput);
+            }}
+            className="border-2 border-gray-800 rounded-lg p-2 focus:outline-none"
+          />
+        </div>
+        <table className="table-custom mx-auto w-full border-separate">
+          <thead>
+            <tr className="bg-[#c0c0c0] text-black">
+              <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">#</th>
+              <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Nombre</th>
+              <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Peso</th>
+              <th className="border border-gray-400 px-7 py-4 w-1/8 text-center">Medida</th>
+              <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Stock Mínimo</th>
+              <th className="border border-gray-400 px-2 py-4 w-1/8 text-center">Categoría asociada</th>
+              <th className="border border-gray-400 px-8 py-4 w-1/8 text-center">Estado</th>
+              <th className="border border-gray-400 px-4 py-4 w-1/8 text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {suppliesToDisplay.map((supply, count) => (
+              <SuppliesCard
+                supplies={supply}
+                key={supply.ID_Supplies}
+                count={startIndex + count + 1}
+                onEdit={() => handleEdit(supply)}
+                onDelete={() => handleDelete(supply)}
+              />
+            ))}
+          </tbody>
+        </table>
 
-      {isDeleteModalOpen && (
-        <DeleteSuppliesModal
-          onClose={cancelDelete}
-          onDelete={confirmDelete}
-        />
-      )}
+        {isDeleteModalOpen && (
+          <DeleteSuppliesModal
+            onClose={cancelDelete}
+            onDelete={confirmDelete}
+          />
+        )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="modal-overlay" onClick={() => setIsModalOpen(false)}></div>
-          <div className="modal-container">
-            <CreateSuppliesModal onClose={() => setIsModalOpen(false)} onCreated={handleCreated} />
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="modal-overlay" onClick={() => setIsModalOpen(false)}></div>
+            <div className="modal-container">
+              <CreateSuppliesModal onClose={() => setIsModalOpen(false)} onCreated={handleCreated} />
+            </div>
+          </div>
+        )}
+
+        {isEditModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}></div>
+            <div className="modal-container">
+              <EditSuppliesModal onClose={() => setIsEditModalOpen(false)} supplyToEdit={supplyToEdit} />
+            </div>
+          </div>
+        )}
+
+        <div className="pagination">
+          <div className="pagination text-center mt-4">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline mr-2"
+            >
+              Anterior
+            </button>
+            <span>Página {currentPage}</span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={endIndex >= supplies.length}
+              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline ml-2"
+            >
+              Siguiente
+            </button>
           </div>
         </div>
-      )}
-
-      {isEditModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="modal-overlay" onClick={() => setIsEditModalOpen(false)}></div>
-          <div className="modal-container">
-            <EditSuppliesModal onClose={() => setIsEditModalOpen(false)} supplyToEdit={supplyToEdit} />
-          </div>
-        </div>
-      )}
-
-      <div className="pagination">
-        <div className="pagination text-center mt-4">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline mr-2"
-          >
-            Anterior
-          </button>
-          <span>Página {currentPage}</span>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={endIndex >= supplies.length}
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 rounded border border-orange-500 hover:border-orange-700 focus:outline-none focus:shadow-outline ml-2"
-          >
-            Siguiente
-          </button>
-        </div>
       </div>
-
     </div>
   );
 }
