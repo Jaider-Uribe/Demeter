@@ -1,4 +1,4 @@
-import axios from "./Axios.js";
+import axios from "./axios.js";
 
 export const getRolesRequest = () => axios.get(`/role`)
 export const getRoleRequest = (ID_Role) => axios.get(`/role/${ID_Role}`)

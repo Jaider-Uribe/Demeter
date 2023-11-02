@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiOutlineEye, AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
-import { useSupplies } from "../Context/Supplies.context.jsx";
-import { useCategorySupplies } from '../Context/CategorySupplies.context.jsx';
+import { useSupplies } from "../Context/Supplies.context.jsx"
+import { useCategorySupplies } from '../Context/CategorySupplies.context.jsx'
 import "../css/style.css";
 import "../css/landing.css";
 import "../fonts/cryptofont.css";
