@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { MdToggleOn, MdToggleOff } from "react-icons/md";
-import { useCategorySupplies } from '../Context/CategorySupplies.context.jsx';
-import { useSupplies } from "../Context/Supplies.context.jsx";
-import CreateSuppliesCategory from "../Components/CreateSuppliesCategory.jsx";
-import UpdateSuppliesCategory from "../Components/UpdateSuppliesCategory.jsx";
-import DeleteSuppliesCategory from "../Components/DeleteSupplies.jsx";
-import CannotDeleteCategory from "../Components/CannotDeleteSuppliesCategory.jsx";
+import { useCategoryProducts } from '../Context/CategoryProducts.context.jsx';
+// import { useProducts } from "../Context/Products.context.jsx";
+import CreateProductCategory from "../Components/CreateProductCategory.jsx";
+import UpdateProductCategory from "../Components/UpdateProductCategory.jsx";
+import DeleteProductCategory from "../Components/DeleteProductCategory.jsx";
+import CannotDeleteCategory from "../Components/CannotDeleteProductsCategory.jsx";
 import "../css/style.css";
 import "../css/landing.css";
 
-function SuppliesCategoryPage() {
-  const { Category_supplies, getCategory_supplies, deleteCategory_supplies, toggleCategorySupplyStatus } = useCategorySupplies();
-  const { supplies, getSupplies } = useSupplies();
+function ProductCategoryPage() {
+  const { Category_products, getCategory_products, deleteCategory_products, toggleCategoryProductStatus } = useCategoryProducts();
+//   const { products, getProducts } = useProducts();
   const [searchTerm, setSearchTerm] = useState("");
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [selectedSupplyCategoryToDelete, setSelectedSupplyCategoryToDelete] = useState(null);
-  const [selectedSupplyCategoryToUpdate, setSelectedSupplyCategoryToUpdate] = useState(null);
+  const [selectedProductCategoryToDelete, setSelectedProductCategoryToDelete] = useState(null);
+  const [selectedProductCategoryToUpdate, setSelectedProductCategoryToUpdate] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
-    getCategory_supplies();
-    getSupplies();
+    getCategory_products();
+    // getProducts();
   }, []);
 
 
@@ -30,37 +30,37 @@ function SuppliesCategoryPage() {
     setSearchTerm(event.target.value);
   };
 
-  const filteredSuppliesCategory = Category_supplies.filter((suppliesCategory) => {
+  const filteredProductsCategory = Category_products.filter((productCategory) => {
     const {
-      Name_SuppliesCategory,
-    } = suppliesCategory;
+      Name_ProductCategory,
+    } = productCategory;
     const searchString =
-      `${Name_SuppliesCategory}`.toLowerCase();
+      `${Name_ProductCategory}`.toLowerCase();
     return searchString.includes(searchTerm.toLowerCase());
   });
 
-  const handleDelete = async (supplyCategory) => {
-    const categoryID = supplyCategory.ID_SuppliesCategory;
+  const handleDelete = async (productCategory) => {
+    // const categoryID = productCategory.ID_ProductCaProduct
+    // const productInCategory = product.filter((product) => product.ProductCategory_ID === categoryID);
 
-    const suppliesInCategory = supplies.filter((supply) => supply.SuppliesCategory_ID === categoryID);
-
-    if (suppliesInCategory.length > 0) {
-      setShowWarning(true);
+    // if (productInCategory.length > 0) {
+      // setShowWarning(true);
       //setDeleteModalOpen(false);
-    } else {
+    // } else {
       setShowWarning(false);
-      setSelectedSupplyCategoryToDelete(supplyCategory);
+      setSelectedProductCategoryToDelete(productCategory);
       setDeleteModalOpen(true);
-    }
+    // }
   };
+
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
-    setSelectedSupplyCategoryToDelete(null);
+    setSelectedProductCategoryToDelete(null);
     setShowWarning(false);
   };
 
-  const handleUpdateSupplyCategory = (supplyCategory) => {
-    setSelectedSupplyCategoryToUpdate(supplyCategory);
+  const handleUpdateProductCategory = (productCategory) => {
+    setSelectedProductCategoryToUpdate(productCategory);
   };
 
 
@@ -77,7 +77,7 @@ function SuppliesCategoryPage() {
                 <div className="card-body">
                   <div className="row">
                     <div className="col-md-6">
-                      <CreateSuppliesCategory />
+                      <CreateProductCategory />
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
@@ -105,34 +105,34 @@ function SuppliesCategoryPage() {
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredSuppliesCategory.map((suppliesCategory) => (
-                            <tr key={suppliesCategory.ID_SuppliesCategory}>
-                              <td>{suppliesCategory.Name_SuppliesCategory}</td>
-                              <td>{suppliesCategory.State ? 'Habilitado' : 'Deshabilitado'}</td>
+                          {filteredProductsCategory.map((productCategory) => (
+                            <tr key={productCategory.ID_ProductCategory}>
+                              <td>{productCategory.Name_ProductCategory}</td>
+                              <td>{productCategory.State ? 'Habilitado' : 'Deshabilitado'}</td>
                               <td>
                                 <div style={{ display: "flex", alignItems: "center" }}>
-                                  <UpdateSuppliesCategory
+                                  <UpdateProductCategory
                                     buttonProps={{
-                                      buttonClass: `btn btn-icon btn-primary ${!suppliesCategory.State ? "text-gray-400 cursor-not-allowed" : ""}`,
-                                      isDisabled: !suppliesCategory.State,
+                                      buttonClass: `btn btn-icon btn-primary ${!productCategory.State ? "text-gray-400 cursor-not-allowed" : ""}`,
+                                      isDisabled: !productCategory.State,
                                       buttonText: <BiEdit />,
                                     }}
-                                    supplyCategoryToEdit={suppliesCategory}
-                                    onUpdate={handleUpdateSupplyCategory}
+                                    productCategoryToEdit={productCategory}
+                                    onUpdate={handleUpdateProductCategory}
                                   />
                                   <button
-                                    onClick={() => handleDelete(suppliesCategory)}
-                                    className={`btn btn-icon btn-danger ${!suppliesCategory.State ? "text-gray-400 cursor-not-allowed" : ""}`}
-                                    disabled={!suppliesCategory.State}
+                                    onClick={() => handleDelete(productCategory)}
+                                    className={`btn btn-icon btn-danger ${!productCategory.State ? "text-gray-400 cursor-not-allowed" : ""}`}
+                                    disabled={!productCategory.State}
                                   >
                                     <AiFillDelete />
                                   </button>
                                   <button
                                     type="button"
-                                    className={`btn btn-icon btn-success ${suppliesCategory.State ? "active" : "inactive"}`}
-                                    onClick={() => toggleCategorySupplyStatus(suppliesCategory.ID_SuppliesCategory)}
+                                    className={`btn btn-icon btn-success ${productCategory.State ? "active" : "inactive"}`}
+                                    onClick={() => toggleCategoryProductStatus(productCategory.ID_ProductCategory)}
                                   >
-                                    {suppliesCategory.State ? (
+                                    {productCategory.State ? (
                                       <MdToggleOn className={`estado-icon active`} />
                                     ) : (
                                       <MdToggleOff className={`estado-icon inactive`} />
@@ -154,11 +154,11 @@ function SuppliesCategoryPage() {
       </div>
 
       {isDeleteModalOpen && (
-        <DeleteSuppliesCategory
+        <DeleteProductCategory
           onClose={closeDeleteModal}
           onDelete={() => {
-            if (selectedSupplyCategoryToDelete) {
-              deleteCategory_supplies(selectedSupplyCategoryToDelete.ID_SuppliesCategory);
+            if (selectedProductCategoryToDelete) {
+              deleteCategory_products(selectedProductCategoryToDelete.ID_ProductCategory);
               closeDeleteModal();
             }
           }}
@@ -171,11 +171,11 @@ function SuppliesCategoryPage() {
         />
       )}
 
-      {selectedSupplyCategoryToUpdate && (
-        <UpdateSuppliesCategory
-          supplyCategoryToEdit={selectedSupplyCategoryToUpdate}
+      {selectedProductCategoryToUpdate && (
+        <UpdateProductCategory
+          productCategoryToEdit={selectedProductCategoryToUpdate}
           onUpdate={() => {
-            setSelectedSupplyCategoryToUpdate(null);
+            setSelectedProductCategoryToUpdate(null);
           }}
         />
       )}
@@ -183,4 +183,4 @@ function SuppliesCategoryPage() {
   );
 }
 
-export default SuppliesCategoryPage;
+export default ProductCategoryPage;

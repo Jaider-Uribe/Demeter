@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { useCategorySupplies } from '../Context/CategorySupplies.context';
+import { useCategoryProducts } from '../Context/CategoryProducts.context';
 import { useForm } from 'react-hook-form';
 
 const style = {
@@ -18,7 +18,7 @@ const style = {
     pb: 3,
 };
 
-function CreateCategory_supplies({
+function CreateCategory_products({
     onDefaultSubmit = null,
     buttonProps = {
         buttonClass: 'btn btn-primary',
@@ -32,24 +32,24 @@ const {
     formState: { errors, isValid },
 } = useForm();
 
-    const { Category_supplies, createCategory_supplies } = useCategorySupplies();
+    const { Category_products, createCategory_products } = useCategoryProducts();
 
     const [open, setOpen] = useState(false);
 
     const onSubmit = handleSubmit(async (values) => {
-        const isNameDuplicate = Category_supplies.some(
-            (SuppliesCategory) => SuppliesCategory.Name_SuppliesCategory === values.Name_SuppliesCategory
+        const isNameDuplicate = Category_products.some(
+            (ProductCategory) => ProductCategory.Name_ProductCategory === values.Name_ProductCategory
         );
 
         if (isNameDuplicate) {
-            setError('Name_SuppliesCategory', {
+            setError('Name_ProductCategory', {
                 type: 'manual',
                 message: 'El nombre de la categoria ya existe.',
             });
             return;
         }
 
-        createCategory_supplies(values);
+        createCategory_products(values);
         setOpen(false);
     });
 
@@ -77,7 +77,7 @@ const {
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h5>Registro de categoria de insumos</h5>
+                                <h5>Registro de categoria de productos</h5>
                             </div>
                             <div className="card-body">
                                 <form
@@ -90,24 +90,24 @@ const {
                                 >
                                     <div className="city">
                                         <div className="form-group col-md-6">
-                                            <label htmlFor="Name_SuppliesCategory" className="form-label">
+                                            <label htmlFor="Name_productCategory" className="form-label">
                                                 Nombre
                                             </label>
                                             <input
-                                                {...register('Name_SuppliesCategory', {
+                                                {...register('Name_ProductCategory', {
                                                     required: 'Este campo es obligatorio',
                                                     pattern: {
                                                         value: /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ\s]*[a-záéíóúñ]$/,
                                                         message:
-                                                            'El nombre de la categoria de insumo debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.',
+                                                            'El nombre de la categoria de producto debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.',
                                                     },
                                                 })}
                                                 type="text"
                                                 className="form-control"
                                             />
-                                            {errors.Name_SuppliesCategory && (
+                                            {errors.Name_ProductCategory && (
                                                 <p className="text-red-500">
-                                                    {errors.Name_SuppliesCategory.message}
+                                                    {errors.Name_ProductCategory.message}
                                                 </p>
                                             )}
                                         </div>
@@ -141,4 +141,4 @@ const {
     );
 }
 
-export default CreateCategory_supplies;
+export default CreateCategory_products;

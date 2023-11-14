@@ -33,11 +33,11 @@ const buttonStyles = {
   marginLeft: '17%',
 };
 
-function DeleteSuppliesCategory({ onClose, onDelete }) {
+function DeleteProductCategory({ onClose, onDelete }) {
   return (
     <div style={overlayStyles} onClick={onClose}>
       <div style={modalStyles}>
-        <h1 className="text-3xl font-semibold">Eliminar categoría de insumo</h1>
+        <h1 className="text-3xl font-semibold">Eliminar categoría de producto</h1>
         <p className="deleteText">¿Está seguro de que desea eliminar esta categoría?</p>
         <div className="flex justify-between ">
           <button onClick={onDelete} style={buttonStyles} className="btn btn-icon btn-danger">
@@ -52,4 +52,4 @@ function DeleteSuppliesCategory({ onClose, onDelete }) {
   );
 }
 
-export default DeleteSuppliesCategory;
+export default DeleteProductCategory;

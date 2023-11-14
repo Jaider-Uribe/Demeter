@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { useSupplies } from '../Context/Supplies.context';
 import { useCategorySupplies } from '../Context/CategorySupplies.context';
 import { useForm } from 'react-hook-form';
 
@@ -102,7 +101,7 @@ function UpdateSuppliesCategory({
                                                     pattern: {
                                                         value: /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ\s]*[a-záéíóúñ]$/,
                                                         message:
-                                                            'El nombre del insumo debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.',
+                                                            'El nombre de la categoria de insumo debe tener la primera letra en mayúscula, el resto en minúscula y solo se permiten letras.',
                                                     },
                                                 })}
                                                 type="text"
